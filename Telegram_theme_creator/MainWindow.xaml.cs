@@ -168,25 +168,6 @@ namespace Telegram_theme_creator
             return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B).GetHue();
         }
 
-        /*public static double GetHue(Color color)
-        {
-            double hue = 0;
-            float max = Max(color.R, color.G, color.B);
-            float min = Min(color.R, color.G, color.B);
-            int alpha = color.A;
-            if (max == min || ((color.R == color.G) && (color.R == color.B)))
-                hue = 0;
-            else if (max == color.R)
-                hue = 60 * ((color.G - color.B) / (max - min));
-            else if (max == color.G)
-                hue = 60 * (2 + (color.B - color.R) / (max - min));
-            else
-                hue = 60 * (4 + (color.R - color.G) / (max - min));
-            if (hue < 0)
-                hue += 360;
-            return hue;
-        }*/
-
         public static Color HexToRgb(string hexColor)
         {
             hexColor = hexColor.Replace(@"#", ""); //remove #
