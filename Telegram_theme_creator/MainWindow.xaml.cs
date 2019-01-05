@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Drawing;
 using Microsoft.Win32;
 using System.Globalization;
 using System.IO;
@@ -20,10 +19,6 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO.Compression;
-using Color = System.Windows.Media.Color;
-using Point = System.Windows.Point;
-using Brushes = System.Windows.Media.Brushes;
-using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace Telegram_theme_creator
 {
