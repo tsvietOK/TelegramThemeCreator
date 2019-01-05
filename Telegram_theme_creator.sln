@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram_theme_creator", "Telegram_theme_creator\Telegram_theme_creator.csproj", "{6FD0C0B6-D082-42B4-874A-7A5C211294F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FD0C0B6-D082-42B4-874A-7A5C211294F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD0C0B6-D082-42B4-874A-7A5C211294F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD0C0B6-D082-42B4-874A-7A5C211294F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD0C0B6-D082-42B4-874A-7A5C211294F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F78CD30-9FE5-4B82-A990-574DD168482E}
+	EndGlobalSection
+EndGlobal
