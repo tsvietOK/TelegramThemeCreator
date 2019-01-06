@@ -289,9 +289,7 @@ namespace Telegram_theme_creator
 
         public static bool IsColor(string color)
         {
-            Regex regex = new Regex(@"\#");
-            Match match = regex.Match(color); //check color
-            if (match.Success)
+            if (color.StartsWith("#"))
             {
                 return true;
             }
