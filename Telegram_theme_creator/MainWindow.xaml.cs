@@ -249,9 +249,11 @@ namespace Telegram_theme_creator
             }
 
             double new_hue = GetHue(((SolidColorBrush)ColorSquare.Fill).Color); //user hue
-            foreach (KeyValuePair<string, string> entry in dic.ToArray())
+
+            for (int i = 0; i < dic.Count; i++)
             {
-                string value = entry.Value;
+                var item = dic.ElementAt(i);
+                string value = item.Value;
                 if ((IsColor(value) == true) && (StandartColor(value) == false))
                 {
                     HSBA hsba = HexToHsba(value);
@@ -262,9 +264,8 @@ namespace Telegram_theme_creator
                             hsba.S -= 0.2;
                         Color new_color = HsbToRgb(hsba.A, new_hue, hsba.S, hsba.B); //convert hsb to rgb with new hue
                         string new_hex_color = RgbToHex(new_color);
-                        dic[entry.Key] = new_hex_color;
+                        dic[item.Key] = new_hex_color;
                     }
-
                     else if (hsba.S < 0.3)
                     {
                         hsba.S = 0.05;
@@ -272,7 +273,7 @@ namespace Telegram_theme_creator
                             hsba.B -= 0.1;
                         Color new_color = HsbToRgb(hsba.A, hsba.H / 10, hsba.S, hsba.B); //convert hsb to rgb with new hue
                         string new_hex_color = RgbToHex(new_color);
-                        dic[entry.Key] = new_hex_color;
+                        dic[item.Key] = new_hex_color;
                     }
                 }
             }
