@@ -16,7 +16,6 @@ using Microsoft.Win32;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IO.Compression;
 
@@ -209,7 +208,6 @@ namespace Telegram_theme_creator
         {
             var regValInt = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null);
             if (regValInt == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
-            CheckFile(@"Newtonsoft.Json.dll");
             CheckFile(@"colors.tdesktop-palette");
             ChangeColor();
         }
@@ -236,34 +234,24 @@ namespace Telegram_theme_creator
             
             string[] lines = File.ReadAllLines(original_theme_file_name);
 
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            Regex split = new Regex(@"^(.+)\:(.+)");
+
             for (int i = 0; i < lines.Length; i++)
             {
-                lines[i] = Regex.Replace(lines[i], @"^\/\/\s.+", string.Empty); //remove comment
-                lines[i] = Regex.Replace(lines[i], @"^\/\/", string.Empty); //remove comment
-                
-                lines[i] = lines[i].Replace(";", "\","); // change ; to ",
-                lines[i] = lines[i].Replace(": ", "\": \""); //change : to ": "
-                
-                lines[i] = lines[i].Trim();
+                lines[i] = Regex.Replace(lines[i], @"^\/\/\s.+|^\/\/|\/\/.+|\;|\s", string.Empty); //remove comment    
+                Match match = split.Match(lines[i]);
+                if (match.Success)
+                {
+                    dic.Add(match.Groups[1].Value, match.Groups[2].Value);
+                }
             }
-            lines = lines.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-            for (int i = 0;  i < lines.Length; i++)
-            {
-                lines[i] = "\"" + lines[i];
-            }
-            lines[lines.Length - 1] = lines[lines.Length - 1].Replace(",", "") + Environment.NewLine + "}";
-            var themeList = new List<string>();
-            themeList.Add("{");
-            themeList.AddRange(lines);
-            string themeJson = string.Join(Environment.NewLine, themeList);
-
-            JObject o = JObject.Parse(themeJson);
 
             double new_hue = GetHue(((SolidColorBrush)ColorSquare.Fill).Color); //user hue
-
-            foreach (KeyValuePair<string, Newtonsoft.Json.Linq.JToken> hex_color in o)
+            foreach (KeyValuePair<string, string> entry in dic.ToArray())
             {
-                string value = hex_color.Value.Value<string>();
+                string value = entry.Value;
                 if ((IsColor(value) == true) && (StandartColor(value) == false))
                 {
                     HSBA hsba = HexToHsba(value);
@@ -274,7 +262,7 @@ namespace Telegram_theme_creator
                             hsba.S -= 0.2;
                         Color new_color = HsbToRgb(hsba.A, new_hue, hsba.S, hsba.B); //convert hsb to rgb with new hue
                         string new_hex_color = RgbToHex(new_color);
-                        o[hex_color.Key] = new_hex_color;
+                        dic[entry.Key] = new_hex_color;
                     }
 
                     else if (hsba.S < 0.3)
@@ -284,22 +272,14 @@ namespace Telegram_theme_creator
                             hsba.B -= 0.1;
                         Color new_color = HsbToRgb(hsba.A, hsba.H / 10, hsba.S, hsba.B); //convert hsb to rgb with new hue
                         string new_hex_color = RgbToHex(new_color);
-                        o[hex_color.Key] = new_hex_color;
-
+                        dic[entry.Key] = new_hex_color;
                     }
                 }
             }
 
-            string json = o.ToString();
-            json = json.Replace("{", "");
-            json = json.Replace("}", "");
-            json = json.Replace("\"", "");
-            json = json.Replace(",", ";");
-            json = json.Replace(" ", "");
-            json = json.Replace(":", ": ");
-            json = json.Trim();
-            json = json + ";";
-            File.WriteAllText(new_theme_file_path, json);
+            using (StreamWriter file = new StreamWriter(new_theme_file_path))
+                foreach (var entry in dic)
+                    file.WriteLine("{0}:{1};", entry.Key, entry.Value);
 
             CreateImage(100, 100, output_folder_path, "tiled.jpg");      
             ZipFile.CreateFromDirectory(output_folder_path, new_zip_file_name);
