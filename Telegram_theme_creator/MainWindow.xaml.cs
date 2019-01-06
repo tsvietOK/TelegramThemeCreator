@@ -315,7 +315,7 @@ namespace Telegram_theme_creator
         {
             if (!(File.Exists(file)))
             {
-                MessageBox.Show(file + " is not exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(file + " does not exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
             }
         }
