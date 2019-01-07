@@ -108,7 +108,7 @@ namespace Telegram_theme_creator
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
             string regVal = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
-            var accentColor = new UniColor(regVal, HexFormat.BGRA);
+            var accentColor = new UniColor(regVal, HexFormat.ABGR);
 
             ColorSquare.Fill = new SolidColorBrush(accentColor.ToMediaColor());
             HueValue.Text = accentColor.Hue.ToString("000");
