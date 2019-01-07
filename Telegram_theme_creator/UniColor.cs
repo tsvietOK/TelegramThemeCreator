@@ -261,11 +261,9 @@ namespace Telegram_theme_creator
         {
             var result = new UniColor()
             {
-                Hue = hue,
-                SaturationV = sat,
-                Value = val,
-                Alpha = alpha
+                Alpha = 255
             };
+            result.SetHSV(hue, sat, val);
             return result;
         }
 
