@@ -39,8 +39,6 @@ namespace Telegram_theme_creator
             set => _rgb[2] = value / 255.0;
         }
 
-        public string HEX => $"#{Red.ToString("X2")}{Green.ToString("X2")}{Blue.ToString("X2")}";
-
         #endregion
 
         #region HSV/HSB/HSL
@@ -271,6 +269,20 @@ namespace Telegram_theme_creator
         public System.Windows.Media.Color ToMediaColor()
         {
             var result = System.Windows.Media.Color.FromArgb(Alpha, Red, Green, Blue);
+            return result;
+        }
+
+        public string ToHex(HexFormat hexFormat)
+        {
+            var b = new byte[4];
+            var indexes = _hexFormatDic[hexFormat];
+            b[indexes[0]] = Red;
+            b[indexes[1]] = Green;
+            b[indexes[2]] = Blue;
+            if (indexes.Length == 4)
+                b[indexes[3]] = Alpha;
+            var hex = b.Take(indexes.Length).Select(x=>x.ToString("X2"));
+            var result = "#" + string.Join("", hex);
             return result;
         }
     }
