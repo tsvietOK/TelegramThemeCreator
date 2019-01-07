@@ -33,40 +33,19 @@ namespace Telegram_theme_creator
 
         private void Rectangle_Initialized(object sender, EventArgs e)
         {
-            double a = 255;
-            double s = 1;
-            double b = 1;
+            byte a = 255;
+            float s = 1;
+            float b = 1;
             LinearGradientBrush gradient = new LinearGradientBrush();
             gradient.StartPoint = new Point(0, 0);
             gradient.EndPoint = new Point(1, 0);
             int n = 360;
             for (int i = 0; i < n; i++)
             {
-                gradient.GradientStops.Add(new GradientStop(HsbToRgb(a, i, s, b), i / 360f));
+                gradient.GradientStops.Add(new GradientStop(UniColor.FromHSV(i, s, b, a).ToMediaColor(), i / 360f));
             }
 
             RainbowRectangle.Fill = gradient;
-        }
-
-        public static Color HsbToRgb(double alpha, double hue, double saturation, double brightness)
-        {
-            if (hue < 0 || saturation < 0 || brightness < 0)
-                throw new ArgumentException($"One of the arguments is negative, hue: {hue}, saturation: {saturation}, brightness: {brightness}");
-            if (saturation > 1 || brightness > 1)
-                throw new ArgumentException($"One of the arguments is too high");
-            if (hue >= 360)
-            {
-                hue -= 360;
-            }
-            var c = brightness * saturation;
-            var x = c * (1 - Math.Abs((hue / 60) % 2 - 1));
-            var m = brightness - c;
-            var k = (int)hue / 60;
-            var rgb = new int[3];
-            rgb[2 - Math.Abs((k + 1) % 3)] = (int)((x + m) * 255);
-            rgb[((k + 1) / 2) % 3] = (int)((c + m) * 255);
-            rgb[((k + 4) / 2) % 3] = (int)((0 + m) * 255);
-            return Color.FromArgb((byte)alpha, (byte)rgb[0], (byte)rgb[1], (byte)rgb[2]);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -105,10 +84,10 @@ namespace Telegram_theme_creator
 
         public void ChangeColor()
         {
-            double color = double.Parse(HueValue.Text);
-            ColorSquare.Fill = new SolidColorBrush(HsbToRgb(255, color, 1, 1));
+            float color = float.Parse(HueValue.Text);
+            ColorSquare.Fill = new SolidColorBrush(UniColor.FromHSV(color, 1, 1, 255).ToMediaColor());
             DrawSelector(color);
-            HexColorBlock.Text = RgbToHex(((SolidColorBrush)ColorSquare.Fill).Color);
+            HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
         }
 
         public void DrawSelector(double color)
@@ -128,81 +107,16 @@ namespace Telegram_theme_creator
 
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
-            string regValInt = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("x");
-            string alpha = regValInt.Substring(0, 2);
-            string blue = regValInt.Substring(2, 2); //parse hex color and convert to rgb
-            string green = regValInt.Substring(4, 2);
-            string red = regValInt.Substring(6, 2);
-            string newHex = red + green + blue + alpha;
+            string regVal = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
+            var accentColor = new UniColor(regVal, HexFormat.BGRA);
 
-            byte intRed = byte.Parse(red, NumberStyles.AllowHexSpecifier);
-            byte intGreen = byte.Parse(green, NumberStyles.AllowHexSpecifier);
-            byte intBlue = byte.Parse(blue, NumberStyles.AllowHexSpecifier);
-            byte intAlpha = byte.Parse(alpha, NumberStyles.AllowHexSpecifier);
+            ColorSquare.Fill = new SolidColorBrush(accentColor.ToMediaColor());
+            HueValue.Text = accentColor.Hue.ToString("000");
+            HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
 
-            ColorSquare.Fill = new SolidColorBrush(Color.FromArgb(intAlpha, intRed, intGreen, intBlue));
-            HSBA hsba = HexToHsba("#" + newHex);
-            HueValue.Text = hsba.H.ToString("000");
-            HexColorBlock.Text = RgbToHex(((SolidColorBrush)ColorSquare.Fill).Color);
-
-            DrawSelector(hsba.H);
+            DrawSelector(accentColor.Hue);
         }
 
-        public static HSBA HexToHsba(string hexColor)
-        {
-            Color color = HexToRgb(hexColor); //convert rgb to hsb
-            float max = Max(color.R, color.G, color.B);
-            float min = Min(color.R, color.G, color.B);
-            int alpha = color.A;
-            HSBA hsba = new HSBA();
-            hsba.H = GetHue(color);
-            hsba.S = (max == 0) ? 0 : 1d - (1d * min / max);
-            hsba.B = max / 255d;
-            hsba.A = alpha;
-            return hsba;
-        }
-
-        public static float GetHue(Color color)
-        {
-            return System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B).GetHue();
-        }
-
-        public static Color HexToRgb(string hexColor)
-        {
-            hexColor = hexColor.Replace(@"#", ""); //remove #
-            byte alpha = 255;
-            byte red = byte.Parse(hexColor.Substring(0, 2), NumberStyles.AllowHexSpecifier); //parse hex color and convert to rgb
-            byte green = byte.Parse(hexColor.Substring(2, 2), NumberStyles.AllowHexSpecifier);
-            byte blue = byte.Parse(hexColor.Substring(4, 2), NumberStyles.AllowHexSpecifier);
-            if (hexColor.Length == 8)
-            {
-                alpha = byte.Parse(hexColor.Substring(6, 2), NumberStyles.AllowHexSpecifier);
-            }
-
-            return Color.FromArgb(alpha, red, green, blue);
-        }
-
-        public static int Max(int x, int y, int z)
-        {
-            int max = Math.Max(x, Math.Max(y, z));
-            return max;
-        }
-
-        public static int Min(int x, int y, int z)
-        {
-            int min = Math.Min(x, Math.Min(y, z));
-            return min;
-        }
-
-        public static string RgbToHex(Color color)
-        {
-            string hex = "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
-            if (color.A != 255)
-            {
-                hex = hex + color.A.ToString("X2"); //convert rgb to hex
-            }
-            return hex;
-        }
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
@@ -231,7 +145,7 @@ namespace Telegram_theme_creator
                 File.Delete(output_folder_path + "tiled.jpg");
             if (File.Exists(new_theme_file_name))
                 File.Delete(new_theme_file_name);
-            
+
             string[] lines = File.ReadAllLines(original_theme_file_name);
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
@@ -248,7 +162,7 @@ namespace Telegram_theme_creator
                 }
             }
 
-            double new_hue = GetHue(((SolidColorBrush)ColorSquare.Fill).Color); //user hue
+            double new_hue = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue; //user hue
 
             for (int i = 0; i < dic.Count; i++)
             {
@@ -256,23 +170,27 @@ namespace Telegram_theme_creator
                 string value = item.Value;
                 if ((IsColor(value) == true) && (StandartColor(value) == false))
                 {
-                    HSBA hsba = HexToHsba(value);
+                    UniColor valColor;
+                    if (value.Length == 8)
+                        valColor = new UniColor(value, HexFormat.RGBA);
+                    else
+                        valColor = new UniColor(value, HexFormat.RGB);
 
-                    if ((hsba.H > 160) && (hsba.H < 180))
+                    if ((valColor.Hue > 160) && (valColor.Hue < 180))
                     {
-                        if (hsba.S >= 0.88)
-                            hsba.S -= 0.2;
-                        Color new_color = HsbToRgb(hsba.A, new_hue, hsba.S, hsba.B); //convert hsb to rgb with new hue
-                        string new_hex_color = RgbToHex(new_color);
+                        if (valColor.SaturationV >= 0.88)
+                            valColor.SaturationV -= 0.2;
+                        valColor.Hue = new_hue;
+                        string new_hex_color = valColor.ToHex(HexFormat.RGBA);
                         dic[item.Key] = new_hex_color;
                     }
-                    else if (hsba.S < 0.3)
+                    else if (valColor.SaturationV < 0.3)
                     {
-                        hsba.S = 0.05;
-                        if ((hsba.B > 0.15) && (hsba.B < 0.35))
-                            hsba.B -= 0.1;
-                        Color new_color = HsbToRgb(hsba.A, hsba.H / 10, hsba.S, hsba.B); //convert hsb to rgb with new hue
-                        string new_hex_color = RgbToHex(new_color);
+                        valColor.SaturationV = 0.05;
+                        if ((valColor.Value > 0.15) && (valColor.Value < 0.35))
+                            valColor.Value -= 0.1;
+                        valColor.Hue /= 10;
+                        string new_hex_color = valColor.ToHex(HexFormat.RGBA);
                         dic[item.Key] = new_hex_color;
                     }
                 }
@@ -282,7 +200,7 @@ namespace Telegram_theme_creator
                 foreach (var entry in dic)
                     file.WriteLine("{0}:{1};", entry.Key, entry.Value);
 
-            CreateImage(100, 100, output_folder_path, "tiled.jpg");      
+            CreateImage(100, 100, output_folder_path, "tiled.jpg");
             ZipFile.CreateFromDirectory(output_folder_path, new_zip_file_name);
             Directory.Delete(output_folder_path, true);
             Process.Start(Environment.CurrentDirectory);
