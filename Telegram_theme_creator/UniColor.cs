@@ -238,7 +238,7 @@ namespace Telegram_theme_creator
                 throw new ArgumentException($"Unknown invalid length of input string '{hex}'");
             var b = hex.Select((x, i) => new { Value = x, Group = i / 2 })
                 .GroupBy(x => x.Group)
-                .Select(x => string.Join("", x))
+                .Select(x => string.Join("", x.Select(y => y.Value)))
                 .Select(x => byte.Parse(x, System.Globalization.NumberStyles.HexNumber))
                 .ToArray();
             var indexes = _hexFormatDic[hexFormat];
@@ -303,7 +303,7 @@ namespace Telegram_theme_creator
             b[indexes[2]] = Blue;
             if (indexes.Length == 4)
                 b[indexes[3]] = Alpha;
-            var hex = b.Take(indexes.Length).Select(x=>x.ToString("X2"));
+            var hex = b.Take(indexes.Length).Select(x => x.ToString("X2"));
             var result = "#" + string.Join("", hex);
             return result;
         }
