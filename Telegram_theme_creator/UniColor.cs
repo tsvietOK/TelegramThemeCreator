@@ -210,6 +210,9 @@ namespace Telegram_theme_creator
 
         private double[] _rgb = new double[3];
 
+        private UniColor()
+        { }
+
         public UniColor(System.Drawing.Color color) : this(color.R, color.G, color.B, color.A)
         { }
 
@@ -247,6 +250,25 @@ namespace Telegram_theme_creator
             if (indexes.Length == 4)
                 Alpha = b[indexes[3]];
         }
+
+        public static UniColor FromHSV(float hue, float sat, float val)
+        {
+            var result = FromHSV(hue, sat, val, 255);
+            return result;
+        }
+
+        public static UniColor FromHSV(float hue, float sat, float val, byte alpha)
+        {
+            var result = new UniColor()
+            {
+                Hue = hue,
+                SaturationV = sat,
+                Value = val,
+                Alpha = alpha
+            };
+            return result;
+        }
+
 
         public UniColor Clone()
         {
