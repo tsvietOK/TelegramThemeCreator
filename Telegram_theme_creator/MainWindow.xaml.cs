@@ -171,6 +171,7 @@ namespace Telegram_theme_creator
                 if ((IsColor(value) == true) && (StandartColor(value) == false))
                 {
                     UniColor valColor;
+                    bool changed = false;
                     if (value.Length == 9)
                         valColor = new UniColor(value, HexFormat.RGBA);
                     else
@@ -178,19 +179,28 @@ namespace Telegram_theme_creator
 
                     if ((valColor.Hue > 160) && (valColor.Hue < 180))
                     {
+                        changed = true;
                         if (valColor.SaturationV >= 0.88)
                             valColor.SaturationV -= 0.2;
                         valColor.Hue = new_hue;
-                        string new_hex_color = valColor.ToHex(HexFormat.RGBA);
-                        dic[item.Key] = new_hex_color;
                     }
                     else if (valColor.SaturationV < 0.3)
                     {
+                        changed = true;
                         valColor.SaturationV = 0.05;
                         if ((valColor.Value > 0.15) && (valColor.Value < 0.35))
                             valColor.Value -= 0.1;
                         valColor.Hue /= 10;
-                        string new_hex_color = valColor.ToHex(HexFormat.RGBA);
+                        
+                    }
+
+                    if(changed)
+                    {
+                        string new_hex_color = string.Empty;
+                        if (value.Length == 9)
+                            new_hex_color = valColor.ToHex(HexFormat.RGBA);
+                        else
+                            new_hex_color = valColor.ToHex(HexFormat.RGB);
                         dic[item.Key] = new_hex_color;
                     }
                 }
