@@ -19,7 +19,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.IO.Compression;
 
-namespace Telegram_theme_creator
+namespace TelegramThemeCreator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Telegram_theme_creator.Properties
+namespace TelegramThemeCreator.Properties
 {
 
 

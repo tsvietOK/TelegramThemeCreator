@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram_theme_creator", "Telegram_theme_creator\Telegram_theme_creator.csproj", "{6FD0C0B6-D082-42B4-874A-7A5C211294F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramThemeCreator", "TelegramThemeCreator\TelegramThemeCreator.csproj", "{6FD0C0B6-D082-42B4-874A-7A5C211294F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

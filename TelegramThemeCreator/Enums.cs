@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Telegram_theme_creator
+namespace TelegramThemeCreator
 {
     public enum HexFormat { RGB, ARGB, RGBA, BGR, BGRA, ABGR }
 }
