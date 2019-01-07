@@ -261,5 +261,17 @@ namespace Telegram_theme_creator
             var result = new UniColor(this.Red, this.Green, this.Blue, this.Alpha);
             return result;
         }
+
+        public System.Drawing.Color ToDrawingColor()
+        {
+            var result = System.Drawing.Color.FromArgb(Alpha, Red, Green, Blue);
+            return result;
+        }
+
+        public System.Windows.Media.Color ToMediaColor()
+        {
+            var result = System.Windows.Media.Color.FromArgb(Alpha, Red, Green, Blue);
+            return result;
+        }
     }
 }
