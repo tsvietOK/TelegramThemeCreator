@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -107,8 +107,7 @@ namespace TelegramThemeCreator
 
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
-            string regVal = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
-            var accentColor = new UniColor(regVal, HexFormat.ABGR);
+            var accentColor = new UniColor(GetSystemAccent(), HexFormat.ABGR);
 
             ColorSquare.Fill = new SolidColorBrush(accentColor.ToMediaColor());
             HueValue.Text = accentColor.Hue.ToString("000");
@@ -117,11 +116,15 @@ namespace TelegramThemeCreator
             DrawSelector(accentColor.Hue);
         }
 
+        public static string GetSystemAccent()
+        {
+            string regColor = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
+            return regColor;
+        }
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
-            var regValInt = Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null);
-            if (regValInt == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
+            if (GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
             CheckFile(@"colors.tdesktop-palette");
             ChangeColor();
         }
