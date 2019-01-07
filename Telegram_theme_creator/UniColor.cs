@@ -206,7 +206,7 @@ namespace Telegram_theme_creator
 
         #endregion
 
-        public byte Alpha { get; set; }
+        public byte Alpha = 255;
 
         private double[] _rgb = new double[3];
 
@@ -259,10 +259,7 @@ namespace Telegram_theme_creator
 
         public static UniColor FromHSV(float hue, float sat, float val, byte alpha)
         {
-            var result = new UniColor()
-            {
-                Alpha = 255
-            };
+            var result = new UniColor();
             result.SetHSV(hue, sat, val);
             return result;
         }
