@@ -171,7 +171,7 @@ namespace Telegram_theme_creator
                 if ((IsColor(value) == true) && (StandartColor(value) == false))
                 {
                     UniColor valColor;
-                    if (value.Length == 8)
+                    if (value.Length == 9)
                         valColor = new UniColor(value, HexFormat.RGBA);
                     else
                         valColor = new UniColor(value, HexFormat.RGB);
