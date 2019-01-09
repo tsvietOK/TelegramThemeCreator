@@ -53,16 +53,6 @@ namespace TelegramThemeCreator
             Close();
         }
 
-        private void GetSystemAccentButton_Initialized(object sender, EventArgs e)
-        {
-            GetSystemAccentButton.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-        }
-
-        private void CreateThemeButton_Initialized(object sender, EventArgs e)
-        {
-            CreateThemeButton.Background = new SolidColorBrush(Color.FromArgb(255, 200, 200, 200));
-        }
-
         private void RainbowRectangle_MouseMove(object sender, MouseEventArgs e)
         {
             Point pointToWindow = Mouse.GetPosition(RainbowRectangle);
@@ -84,25 +74,28 @@ namespace TelegramThemeCreator
 
         public void ChangeColor()
         {
-            float color = float.Parse(HueValue.Text);
-            ColorSquare.Fill = new SolidColorBrush(UniColor.FromHSV(color, 1, 1, 255).ToMediaColor());
-            DrawSelector(color);
+            float pos = float.Parse(HueValue.Text);
+            ColorSquare.Fill = new SolidColorBrush(UniColor.FromHSV(pos, 1, 1, 255).ToMediaColor());
+            DrawSelector(pos);
             HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
         }
 
-        public void DrawSelector(double color)
+        public void DrawSelector(double position)
         {
             canvas.Children.Clear();
             Rectangle Selector = new Rectangle
             {
-                Width = 8,
-                Height = 40,
-                Stroke = Brushes.Black,
-                StrokeThickness = 1,
+                Width = 20,
+                Height = 20,
+                Fill = ColorSquare.Fill,
+                Stroke = Brushes.White,
+                StrokeThickness = 2,
+                RadiusX = Width / 2,
+                RadiusY = Height / 2,
             };
             canvas.Children.Add(Selector);
-            Canvas.SetTop(Selector, 0);
-            Canvas.SetLeft(Selector, color - 2);
+            Canvas.SetTop(Selector, -5);
+            Canvas.SetLeft(Selector, position - 8);
         }
 
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
@@ -270,6 +263,25 @@ namespace TelegramThemeCreator
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(HexColorBlock.Text);
+        }
+
+        private void RainbowHelper_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point pointToWindow = Mouse.GetPosition(RainbowRectangle);
+            HueValue.Text = pointToWindow.X.ToString();
+            if (int.Parse(HueValue.Text) < 0)
+                HueValue.Text = "0";
+            if (int.Parse(HueValue.Text) > 360)
+                HueValue.Text = "360";
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                ChangeColor();
+            }
+        }
+
+        private void RainbowHelper_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ChangeColor();
         }
     }
 }
