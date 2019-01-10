@@ -78,7 +78,7 @@ namespace TelegramThemeCreator
             selectedPosition = (selectedPosition < 0 ? 0 : (selectedPosition > 360 ? 360 : selectedPosition));
             AnimateSelector(selectedPosition);
         }
-        
+
         private System.Windows.Threading.DispatcherTimer SelectorAnimationTimer;
 
         private void AnimateSelector(double selectedPosition)
@@ -99,15 +99,15 @@ namespace TelegramThemeCreator
             var selectedPosition = (double)timer.Tag;
             var currentPosition = Canvas.GetLeft(Selector);
             var step = selectedPosition - currentPosition;
-            if(Math.Abs(step)>1)
+            if (Math.Abs(step) > 1)
                 step /= 5;
             var nextPosition = currentPosition += step;
             MoveSelector(nextPosition);
             if (nextPosition == selectedPosition)
                 timer.Stop();
-            
+
         }
-        
+
         private void MoveSelector(double position)
         {
             var color = UniColor.FromHSV((float)position, 1, 1, 255);
@@ -116,7 +116,6 @@ namespace TelegramThemeCreator
 
             Canvas.SetLeft(Selector, position);
         }
-
 
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
@@ -139,7 +138,7 @@ namespace TelegramThemeCreator
         {
             if (GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
             CheckFile(@"colors.tdesktop-palette");
-            
+
             MoveSelector(0);
         }
 
@@ -208,10 +207,10 @@ namespace TelegramThemeCreator
                         if ((valColor.Value > 0.15) && (valColor.Value < 0.35))
                             valColor.Value -= 0.1;
                         valColor.Hue /= 10;
-                        
+
                     }
 
-                    if(changed)
+                    if (changed)
                     {
                         string new_hex_color = string.Empty;
                         if (value.Length == 9)
@@ -285,6 +284,6 @@ namespace TelegramThemeCreator
         {
             Clipboard.SetText(HexColorBlock.Text);
         }
-        
+
     }
 }
