@@ -46,6 +46,7 @@ namespace TelegramThemeCreator
             }
 
             RainbowRectangle.Fill = gradient;
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -63,40 +64,50 @@ namespace TelegramThemeCreator
                 HueValue.Text = "360";
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                ChangeColor();
+                ChangeColor(pointToWindow.X);
             }
         }
 
         private void Rainbow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ChangeColor();
+            ChangeColor(e.GetPosition(RainbowRectangle).X);
         }
 
-        public void ChangeColor()
+        public void ChangeColor(double selectedPosition)
         {
-            float pos = float.Parse(HueValue.Text);
-            ColorSquare.Fill = new SolidColorBrush(UniColor.FromHSV(pos, 1, 1, 255).ToMediaColor());
-            DrawSelector(pos);
-            HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
+            selectedPosition = (selectedPosition < 0 ? 0 : (selectedPosition > 360 ? 360 : selectedPosition));
+            AnimateSelector(selectedPosition);
         }
+        
+        private System.Windows.Threading.DispatcherTimer SelectorAnimationTimer;
 
-        public void DrawSelector(double position)
+        private void AnimateSelector(double selectedPosition)
         {
-            canvas.Children.Clear();
-            Rectangle Selector = new Rectangle
+            SelectorAnimationTimer?.Stop();
+            SelectorAnimationTimer = new System.Windows.Threading.DispatcherTimer()
             {
-                Width = 20,
-                Height = 20,
-                Fill = ColorSquare.Fill,
-                Stroke = Brushes.White,
-                StrokeThickness = 2,
-                RadiusX = Width / 2,
-                RadiusY = Height / 2,
+                Tag = selectedPosition,
+                Interval = TimeSpan.FromMilliseconds(10)
             };
-            canvas.Children.Add(Selector);
-            Canvas.SetTop(Selector, -5);
-            Canvas.SetLeft(Selector, position - 8);
+            SelectorAnimationTimer.Tick += SelectorAnimationTimer_Tick;
+            SelectorAnimationTimer.Start();
         }
+
+        private void SelectorAnimationTimer_Tick(object sender, EventArgs e)
+        {
+            var timer = (System.Windows.Threading.DispatcherTimer)sender;
+            var selectedPosition = (double)timer.Tag;
+            var currentPosition = Canvas.GetLeft(Selector);
+            var step = selectedPosition - currentPosition;
+            if(Math.Abs(step)>1)
+                step /= 5;
+            var nextPosition = currentPosition += step;
+            MoveSelector(nextPosition);
+            if (nextPosition == selectedPosition)
+                timer.Stop();
+            
+        }
+        
         private void MoveSelector(double position)
         {
             var color = UniColor.FromHSV((float)position, 1, 1, 255);
@@ -106,6 +117,7 @@ namespace TelegramThemeCreator
             Canvas.SetLeft(Selector, position);
         }
 
+
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
             var accentColor = new UniColor(GetSystemAccent(), HexFormat.ABGR);
@@ -114,7 +126,7 @@ namespace TelegramThemeCreator
             HueValue.Text = accentColor.Hue.ToString("000");
             HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
 
-            DrawSelector(accentColor.Hue);
+            ChangeColor(accentColor.Hue);
         }
 
         public static string GetSystemAccent()
@@ -127,7 +139,8 @@ namespace TelegramThemeCreator
         {
             if (GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
             CheckFile(@"colors.tdesktop-palette");
-            ChangeColor();
+            
+            MoveSelector(0);
         }
 
         private void CreateThemeButton_Click(object sender, RoutedEventArgs e)
