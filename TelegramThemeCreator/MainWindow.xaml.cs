@@ -55,13 +55,13 @@ namespace TelegramThemeCreator
 
         private void Rainbow_MouseMove(object sender, MouseEventArgs e)
         {
-            Point pointToWindow = Mouse.GetPosition(RainbowRectangle);
+            Point pointToWindow = e.GetPosition(RainbowRectangle);
             HueValue.Text = pointToWindow.X.ToString();
             if (int.Parse(HueValue.Text) < 0)
                 HueValue.Text = "0";
             if (int.Parse(HueValue.Text) > 360)
                 HueValue.Text = "360";
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 ChangeColor();
             }
