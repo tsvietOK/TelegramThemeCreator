@@ -53,7 +53,7 @@ namespace TelegramThemeCreator
             Close();
         }
 
-        private void RainbowRectangle_MouseMove(object sender, MouseEventArgs e)
+        private void Rainbow_MouseMove(object sender, MouseEventArgs e)
         {
             Point pointToWindow = Mouse.GetPosition(RainbowRectangle);
             HueValue.Text = pointToWindow.X.ToString();
@@ -67,7 +67,7 @@ namespace TelegramThemeCreator
             }
         }
 
-        private void RainbowRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Rainbow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ChangeColor();
         }
@@ -264,24 +264,6 @@ namespace TelegramThemeCreator
         {
             Clipboard.SetText(HexColorBlock.Text);
         }
-
-        private void RainbowHelper_MouseMove(object sender, MouseEventArgs e)
-        {
-            Point pointToWindow = Mouse.GetPosition(RainbowRectangle);
-            HueValue.Text = pointToWindow.X.ToString();
-            if (int.Parse(HueValue.Text) < 0)
-                HueValue.Text = "0";
-            if (int.Parse(HueValue.Text) > 360)
-                HueValue.Text = "360";
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
-            {
-                ChangeColor();
-            }
-        }
-
-        private void RainbowHelper_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ChangeColor();
-        }
+        
     }
 }

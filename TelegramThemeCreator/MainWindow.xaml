@@ -1,4 +1,4 @@
-﻿<Window x:Name="MainWindow1" x:Class="TelegramThemeCreator.MainWindow"
+<Window x:Name="MainWindow1" x:Class="TelegramThemeCreator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Rectangle x:Name="RainbowRectangle" HorizontalAlignment="Left" Height="10" Margin="61,66,0,0" VerticalAlignment="Top" Width="360" Initialized="Rectangle_Initialized" Fill="Black" MouseMove="RainbowRectangle_MouseMove" MouseDown="RainbowRectangle_MouseDown" RadiusX="5" RadiusY="5"/>
+        <Rectangle x:Name="RainbowRectangle" HorizontalAlignment="Left" Height="10" Margin="61,66,0,0" VerticalAlignment="Top" Width="360" Initialized="Rectangle_Initialized" Fill="Black" MouseMove="Rainbow_MouseMove" MouseDown="Rainbow_MouseDown" RadiusX="5" RadiusY="5"/>
         <Button x:Name="CreateThemeButton" Content="Create theme" HorizontalAlignment="Left" Margin="321,100,0,0" VerticalAlignment="Top" Width="100" Click="CreateThemeButton_Click" BorderThickness="0" FontFamily="Open Sans" Height="25"/>
         <Rectangle Fill="#FF191919" HorizontalAlignment="Left" Height="21" Margin="-4,0,0,0" VerticalAlignment="Top" Width="494" MouseDown="Rectangle_MouseDown"/>
         <Button x:Name="CloseButton" Content="Х" HorizontalAlignment="Left" Margin="466,0,0,118" Width="24" FontFamily="Lucida Console" Click="Button_Click_1" BorderThickness="0" Height="21" RenderTransformOrigin="0.5,0.5" FontStretch="Expanded" FontWeight="Bold">
@@ -49,7 +49,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="62,96,0,0" TextWrapping="Wrap" Text="Hue:" VerticalAlignment="Top" Foreground="White" FontFamily="Open Sans"/>
         <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="10" Margin="59,66,0,0" VerticalAlignment="Top" Width="364" ScrollViewer.CanContentScroll="True" Panel.ZIndex="-1"/>
         <TextBlock HorizontalAlignment="Left" Margin="61,28,0,0" TextWrapping="Wrap" Text="Choose your Telegram accent color:" VerticalAlignment="Top" Foreground="White" FontFamily="Open Sans" FontSize="16"/>
-        <Rectangle x:Name="RainbowHelper" Fill="#FF282828" HorizontalAlignment="Left" Height="52" Margin="61,44,0,0" RadiusY="5" RadiusX="5" VerticalAlignment="Top" Width="360" Panel.ZIndex="-2" MouseMove="RainbowHelper_MouseMove" MouseDown="RainbowHelper_MouseDown"/>
+        <Rectangle x:Name="RainbowHelper" Fill="#FF282828" HorizontalAlignment="Left" Height="52" Margin="61,44,0,0" RadiusY="5" RadiusX="5" VerticalAlignment="Top" Width="360" Panel.ZIndex="-2" MouseMove="Rainbow_MouseMove" MouseDown="Rainbow_MouseDown"/>
 
     </Grid>
     <Window.Resources>
