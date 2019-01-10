@@ -97,6 +97,14 @@ namespace TelegramThemeCreator
             Canvas.SetTop(Selector, -5);
             Canvas.SetLeft(Selector, position - 8);
         }
+        private void MoveSelector(double position)
+        {
+            var color = UniColor.FromHSV((float)position, 1, 1, 255);
+            ColorSquare.Fill = new SolidColorBrush(color.ToMediaColor());
+            HexColorBlock.Text = color.ToHex(HexFormat.RGB);
+
+            Canvas.SetLeft(Selector, position);
+        }
 
         private void GetSystemAccentButton_Click(object sender, RoutedEventArgs e)
         {
