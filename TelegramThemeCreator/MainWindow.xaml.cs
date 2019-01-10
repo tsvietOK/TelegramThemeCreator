@@ -57,9 +57,9 @@ namespace TelegramThemeCreator
         {
             Point pointToWindow = e.GetPosition(RainbowRectangle);
             HueValue.Text = pointToWindow.X.ToString();
-            if (int.Parse(HueValue.Text) < 0)
+            if (pointToWindow.X < 0)
                 HueValue.Text = "0";
-            if (int.Parse(HueValue.Text) > 360)
+            if (pointToWindow.X > 360)
                 HueValue.Text = "360";
             if (e.LeftButton == MouseButtonState.Pressed)
             {
