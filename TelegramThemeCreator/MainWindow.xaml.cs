@@ -134,9 +134,12 @@ namespace TelegramThemeCreator
             return regColor;
         }
 
+        string winWallpaperFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Microsoft\\Windows\\Themes\\TranscodedWallpaper";
+
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
             if (GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
+            if (!File.Exists(winWallpaperFile)) UseWindowsWallpaperCheckBox.IsEnabled = false;
             CheckFile(@"colors.tdesktop-palette");
 
             MoveSelector(0);
@@ -225,8 +228,15 @@ namespace TelegramThemeCreator
             using (StreamWriter file = new StreamWriter(new_theme_file_path))
                 foreach (var entry in dic)
                     file.WriteLine("{0}:{1};", entry.Key, entry.Value);
+            if (UseWindowsWallpaperCheckBox.IsChecked == true)
+            {
+                File.Copy(winWallpaperFile, output_folder_path + "background.jpg");
+            }
+            else
+            {
+                CreateImage(100, 100, output_folder_path, "tiled.jpg");
+            }
 
-            CreateImage(100, 100, output_folder_path, "tiled.jpg");
             ZipFile.CreateFromDirectory(output_folder_path, new_zip_file_name);
             Directory.Delete(output_folder_path, true);
             Process.Start(Environment.CurrentDirectory);
@@ -284,6 +294,5 @@ namespace TelegramThemeCreator
         {
             Clipboard.SetText(HexColorBlock.Text);
         }
-
     }
 }
