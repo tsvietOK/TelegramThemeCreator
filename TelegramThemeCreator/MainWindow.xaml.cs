@@ -147,25 +147,25 @@ namespace TelegramThemeCreator
 
         private void CreateThemeButton_Click(object sender, RoutedEventArgs e)
         {
-            string original_theme_file_name = @"colors.tdesktop-palette";
-            string output_folder_path = @"Output\";
-            string new_theme_file_name = @"colors.tdesktop-theme";
-            string new_zip_file_name = @"Your_theme.tdesktop-theme";
-            string new_theme_file_path = output_folder_path + new_theme_file_name;
-            if (Directory.Exists(output_folder_path) == false)
+            string originalThemeFileName = @"colors.tdesktop-palette";
+            string outputFolderPath = @"Output\";
+            string newThemeFileName = @"colors.tdesktop-theme";
+            string newZipFileName = @"Your_theme.tdesktop-theme";
+            string newThemeFilePath = outputFolderPath + newThemeFileName;
+            if (Directory.Exists(outputFolderPath) == false)
             {
-                Directory.CreateDirectory(output_folder_path);
+                Directory.CreateDirectory(outputFolderPath);
             }
-            if (File.Exists(new_theme_file_path))
-                File.Delete(new_theme_file_path);
-            if (File.Exists(new_zip_file_name))
-                File.Delete(new_zip_file_name);
-            if (File.Exists(output_folder_path + "tiled.jpg"))
-                File.Delete(output_folder_path + "tiled.jpg");
-            if (File.Exists(new_theme_file_name))
-                File.Delete(new_theme_file_name);
+            if (File.Exists(newThemeFilePath))
+                File.Delete(newThemeFilePath);
+            if (File.Exists(newZipFileName))
+                File.Delete(newZipFileName);
+            if (File.Exists(outputFolderPath + "tiled.jpg"))
+                File.Delete(outputFolderPath + "tiled.jpg");
+            if (File.Exists(newThemeFileName))
+                File.Delete(newThemeFileName);
 
-            string[] lines = File.ReadAllLines(original_theme_file_name);
+            string[] lines = File.ReadAllLines(originalThemeFileName);
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
 
@@ -181,7 +181,7 @@ namespace TelegramThemeCreator
                 }
             }
 
-            double new_hue = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue; //user hue
+            double newHue = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue; //user hue
 
             for (int i = 0; i < dic.Count; i++)
             {
@@ -201,7 +201,7 @@ namespace TelegramThemeCreator
                         changed = true;
                         if (valColor.SaturationV >= 0.88)
                             valColor.SaturationV -= 0.2;
-                        valColor.Hue = new_hue;
+                        valColor.Hue = newHue;
                     }
                     else if (valColor.SaturationV < 0.3)
                     {
@@ -215,30 +215,30 @@ namespace TelegramThemeCreator
 
                     if (changed)
                     {
-                        string new_hex_color = string.Empty;
+                        string newHexColor = string.Empty;
                         if (value.Length == 9)
-                            new_hex_color = valColor.ToHex(HexFormat.RGBA);
+                            newHexColor = valColor.ToHex(HexFormat.RGBA);
                         else
-                            new_hex_color = valColor.ToHex(HexFormat.RGB);
-                        dic[item.Key] = new_hex_color;
+                            newHexColor = valColor.ToHex(HexFormat.RGB);
+                        dic[item.Key] = newHexColor;
                     }
                 }
             }
 
-            using (StreamWriter file = new StreamWriter(new_theme_file_path))
+            using (StreamWriter file = new StreamWriter(newThemeFilePath))
                 foreach (var entry in dic)
                     file.WriteLine("{0}:{1};", entry.Key, entry.Value);
             if (UseWindowsWallpaperCheckBox.IsChecked == true)
             {
-                File.Copy(winWallpaperFile, output_folder_path + "background.jpg");
+                File.Copy(winWallpaperFile, outputFolderPath + "background.jpg");
             }
             else
             {
-                CreateImage(100, 100, output_folder_path, "tiled.jpg");
+                CreateImage(100, 100, outputFolderPath, "tiled.jpg");
             }
 
-            ZipFile.CreateFromDirectory(output_folder_path, new_zip_file_name);
-            Directory.Delete(output_folder_path, true);
+            ZipFile.CreateFromDirectory(outputFolderPath, newZipFileName);
+            Directory.Delete(outputFolderPath, true);
             Process.Start(Environment.CurrentDirectory);
         }
 
