@@ -130,7 +130,15 @@ namespace TelegramThemeCreator
 
         public static string GetSystemAccent()
         {
-            string regColor = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
+            string regColor;
+            try
+            {
+                regColor = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
+            }
+            catch
+            {
+                regColor = null;
+            }
             return regColor;
         }
 
