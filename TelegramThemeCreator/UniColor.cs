@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TelegramThemeCreator
 {
@@ -47,8 +46,8 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = this._rgb.Max();
-                var min = this._rgb.Min();
+                var max = _rgb.Max();
+                var min = _rgb.Min();
                 double h;
                 if (max == min || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2])))
                     h = 0;
@@ -76,8 +75,8 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = this._rgb.Max();
-                var min = this._rgb.Min();
+                var max = _rgb.Max();
+                var min = _rgb.Min();
                 double s;
                 if (max == 0 || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2]) && (_rgb[0] == 0)))
                     s = 0;
@@ -99,7 +98,7 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = this._rgb.Max();
+                var max = _rgb.Max();
                 return max;
             }
             set
