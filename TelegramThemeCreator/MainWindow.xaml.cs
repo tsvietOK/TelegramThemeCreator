@@ -98,7 +98,7 @@ namespace TelegramThemeCreator
         {
             var color = UniColor.FromHSV((float)position, 1, 1, 255);
             ColorSquare.Fill = new SolidColorBrush(color.ToMediaColor());
-            HexColorBlock.Text = color.ToHex(HexFormat.RGB);
+            HexColorBlock.Text = color.ToHex();
 
             Canvas.SetLeft(Selector, position);
         }
@@ -109,7 +109,7 @@ namespace TelegramThemeCreator
 
             ColorSquare.Fill = new SolidColorBrush(accentColor.ToMediaColor());
             HueValue.Text = accentColor.Hue.ToString("000");
-            HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex(HexFormat.RGB);
+            HexColorBlock.Text = new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).ToHex();
 
             ChangeColor(accentColor.Hue);
         }

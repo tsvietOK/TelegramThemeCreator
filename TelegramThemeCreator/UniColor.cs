@@ -286,17 +286,12 @@ namespace TelegramThemeCreator
             return result;
         }
 
-        public string ToHex(HexFormat hexFormat)
+        public string ToHex()
         {
-            var b = new byte[4];
-            var indexes = HexFormatDic[hexFormat];
-            b[indexes[0]] = Red;
-            b[indexes[1]] = Green;
-            b[indexes[2]] = Blue;
-            if (indexes.Length == 4)
-                b[indexes[3]] = Alpha;
-            var hex = b.Take(indexes.Length).Select(x => x.ToString("X2"));
-            var result = "#" + string.Join(string.Empty, hex);
+            var color = ToDrawingColor();
+            string result = "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
+            if (color.A != 255)
+                result += color.A.ToString("X2");
             return result;
         }
     }

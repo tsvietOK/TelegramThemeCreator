@@ -82,7 +82,7 @@ namespace TelegramThemeCreator
 
                     if (changed)
                     {
-                        string newHexColor = colorValue.Length == 9 ? valColor.ToHex(HexFormat.RGBA) : valColor.ToHex(HexFormat.RGB);
+                        string newHexColor = valColor.ToHex();
                         colorsDic[item.Key] = newHexColor;
                     }
                 }
