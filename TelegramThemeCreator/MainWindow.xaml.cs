@@ -117,7 +117,7 @@ namespace TelegramThemeCreator
         {
             if (SysUtils.GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
             if (!File.Exists(SysUtils.GetWinWallpaperFilePath())) UseWindowsWallpaperCheckBox.IsEnabled = false;
-            CheckFile(@"colors.tdesktop-palette");
+            CheckFile(Theme.GetOriginalThemeFileName());
 
             MoveSelector(0);
         }

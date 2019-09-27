@@ -10,13 +10,17 @@ namespace TelegramThemeCreator
 {
     public static class Theme
     {
+        private const string originalThemeFileName = @"Resource\colors.tdesktop-palette";
+        private const string outputFolderPath = @"Output\";
+        private const string newThemeFileName = @"colors.tdesktop-theme";
+        private const string newZipFileName = @"Your_theme.tdesktop-theme";
+        private const string newThemeFilePath = outputFolderPath + newThemeFileName;
+        public static string GetOriginalThemeFileName()
+        {
+            return originalThemeFileName;
+        }
         public static void Create(double newHue, bool useWindowsWallpaper)
         {
-            string originalThemeFileName = @"colors.tdesktop-palette";
-            string outputFolderPath = @"Output\";
-            string newThemeFileName = @"colors.tdesktop-theme";
-            string newZipFileName = @"Your_theme.tdesktop-theme";
-            string newThemeFilePath = outputFolderPath + newThemeFileName;
             if (Directory.Exists(outputFolderPath) == false)
             {
                 Directory.CreateDirectory(outputFolderPath);
