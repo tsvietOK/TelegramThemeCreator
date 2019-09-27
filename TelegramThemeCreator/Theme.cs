@@ -75,7 +75,6 @@ namespace TelegramThemeCreator
                         if ((valColor.Value > 0.15) && (valColor.Value < 0.35))
                             valColor.Value -= 0.1;
                         valColor.Hue /= 10;
-
                     }
 
                     if (changed)
@@ -103,13 +102,12 @@ namespace TelegramThemeCreator
             Process.Start(Environment.CurrentDirectory);
         }
 
-        public static System.Drawing.Bitmap CreateImage(int width, int height, string path, string filename)
+        public static void CreateImage(int width, int height, string path, string filename)
         {
             var bitmap = new System.Drawing.Bitmap(width, height);
             System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bitmap);
             graphics.Clear(System.Drawing.Color.FromArgb(255, 12, 12, 12));
             bitmap.Save(path + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-            return bitmap;
         }
     }
 }
