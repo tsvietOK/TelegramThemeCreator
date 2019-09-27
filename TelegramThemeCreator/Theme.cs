@@ -10,6 +10,7 @@ namespace TelegramThemeCreator
 {
     public static class Theme
     {
+        public static List<Color> colorList = new List<Color>();
         private const string OriginalThemeFileName = @"Resource\colors.tdesktop-palette";
         private const string OutputFolderPath = @"Output\";
         private const string NewThemeFileName = "colors.tdesktop-theme";
@@ -41,56 +42,49 @@ namespace TelegramThemeCreator
 
             string[] lines = File.ReadAllLines(OriginalThemeFileName);
 
-            Dictionary<string, string> colorsDic = new Dictionary<string, string>();
-
             Regex split = new Regex(@"^(.+)\:(.+)");
 
             for (int i = 0; i < lines.Length; i++)
             {
-                lines[i] = Regex.Replace(lines[i], @"^\/\/\s.+|^\/\/|\/\/.+|\;|\s", string.Empty); //remove comment    
+                lines[i] = Regex.Replace(lines[i], @"^\/\/\s.+|^\/\/|\/\/.+|\;|\s", string.Empty); // remove comments
                 Match match = split.Match(lines[i]);
                 if (match.Success)
                 {
-                    colorsDic.Add(match.Groups[1].Value, match.Groups[2].Value);
+                    string name = match.Groups[1].Value;
+                    string value = match.Groups[2].Value;
+                    colorList.Add(new Color(name, value));
                 }
             }
-            for (int i = 0; i < colorsDic.Count; i++)
+
+            foreach (Color color in colorList.Where(x => x.IsColor() == true)
+                                             .Where(y => y.IsStandartColor() == false))
             {
-                var item = colorsDic.ElementAt(i);
-                string colorValue = item.Value;
-                if ((ColorUtils.IsColor(colorValue) == true) && (ColorUtils.StandartColor(colorValue) == false))
+                UniColor colorValue = color.GetValue();
+                bool changed = false;
+
+                if ((colorValue.Hue > 160) && (colorValue.Hue < 180))
                 {
-                    UniColor valColor;
-                    bool changed = false;
-                    valColor = colorValue.Length == 9 ? new UniColor(colorValue, HexFormat.RGBA) : new UniColor(colorValue, HexFormat.RGB);
-
-                    if ((valColor.Hue > 160) && (valColor.Hue < 180))
-                    {
-                        changed = true;
-                        if (valColor.SaturationV >= 0.88)
-                            valColor.SaturationV -= 0.2;
-                        valColor.Hue = newHue;
-                    }
-                    else if (valColor.SaturationV < 0.3)
-                    {
-                        changed = true;
-                        valColor.SaturationV = 0.05;
-                        if ((valColor.Value > 0.15) && (valColor.Value < 0.35))
-                            valColor.Value -= 0.1;
-                        valColor.Hue /= 10;
-                    }
-
-                    if (changed)
-                    {
-                        string newHexColor = valColor.ToHex();
-                        colorsDic[item.Key] = newHexColor;
-                    }
+                    changed = true;
+                    if (colorValue.SaturationV >= 0.88)
+                        colorValue.SaturationV -= 0.2;
+                    colorValue.Hue = newHue;
                 }
+                else if (colorValue.SaturationV < 0.3)
+                {
+                    changed = true;
+                    colorValue.SaturationV = 0.05;
+                    if ((colorValue.Value > 0.15) && (colorValue.Value < 0.35))
+                        colorValue.Value -= 0.1;
+                    colorValue.Hue /= 10;
+                }
+
+                if (changed)
+                    color.ChangeColor(colorValue);
             }
 
             using (StreamWriter file = new StreamWriter(NewThemeFilePath))
-                foreach (var entry in colorsDic)
-                    file.WriteLine("{0}:{1};", entry.Key, entry.Value);
+                foreach (var color in colorList)
+                    file.WriteLine($"{color.GetName()}:{color.GetColor()};");
             if (useWindowsWallpaper)
             {
                 File.Copy(SysUtils.GetWinWallpaperFilePath(), OutputFolderPath + NewBackgroundImageFileName);
@@ -103,6 +97,7 @@ namespace TelegramThemeCreator
             ZipFile.CreateFromDirectory(OutputFolderPath, NewZipFileName);
             Directory.Delete(OutputFolderPath, true);
             Process.Start(Environment.CurrentDirectory);
+            colorList.Clear();
         }
 
         public static void CreateImage(int width, int height, string path, string filename)

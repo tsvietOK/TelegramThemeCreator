@@ -116,9 +116,9 @@ namespace TelegramThemeCreator
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
-            if (SysUtils.GetSystemAccent() == null) 
+            if (SysUtils.GetSystemAccent() == null)
                 GetSystemAccentButton.Visibility = Visibility.Hidden;
-            if (!File.Exists(SysUtils.GetWinWallpaperFilePath())) 
+            if (!File.Exists(SysUtils.GetWinWallpaperFilePath()))
                 UseWindowsWallpaperCheckBox.IsEnabled = false;
             CheckFile(Theme.GetOriginalThemeFileName());
 

@@ -7,9 +7,12 @@
             return color.StartsWith("#");
         }
 
-        public static bool StandartColor(string hexColor)
+        public static bool IsStandartColor(string hexColor)
         {
-            return hexColor.StartsWith("#ffffff") || hexColor.StartsWith("#000000");
+            return hexColor.StartsWith("#ffffff")
+                   || hexColor.StartsWith("#000000")
+                   || hexColor.StartsWith("#ffffffff")
+                   || hexColor.StartsWith("#00000000");
         }
     }
 }
