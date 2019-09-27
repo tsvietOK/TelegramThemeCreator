@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TelegramThemeCreator
 {
-    public class UniColor : ICloneable
+    public class UniColor
     {
         private static readonly Dictionary<HexFormat, int[]> HexFormatDic = new Dictionary<HexFormat, int[]>()
         {
@@ -259,18 +259,6 @@ namespace TelegramThemeCreator
                 Alpha = alpha
             };
             result.SetHSV(hue, sat, val);
-            return result;
-        }
-
-        public UniColor Clone()
-        {
-            var result = (UniColor)MemberwiseClone();
-            return result;
-        }
-
-        object ICloneable.Clone()
-        {
-            var result = new UniColor(Red, Green, Blue, Alpha);
             return result;
         }
 
