@@ -10,33 +10,36 @@ namespace TelegramThemeCreator
 {
     public static class Theme
     {
-        private const string originalThemeFileName = @"Resource\colors.tdesktop-palette";
-        private const string outputFolderPath = @"Output\";
-        private const string newThemeFileName = "colors.tdesktop-theme";
-        private const string newZipFileName = "Your_theme.tdesktop-theme";
-        private const string newBackgroundColorFileName = "tiled.jpg";
-        private const string newBackgroundImageFileName = "background.jpg";
-        private const string newThemeFilePath = outputFolderPath + newThemeFileName;
+        private const string OriginalThemeFileName = @"Resource\colors.tdesktop-palette";
+        private const string OutputFolderPath = @"Output\";
+        private const string NewThemeFileName = "colors.tdesktop-theme";
+        private const string NewZipFileName = "Your_theme.tdesktop-theme";
+        private const string NewBackgroundColorFileName = "tiled.jpg";
+        private const string NewBackgroundImageFileName = "background.jpg";
+        private const string NewThemeFilePath = OutputFolderPath + NewThemeFileName;
+
         public static string GetOriginalThemeFileName()
         {
-            return originalThemeFileName;
+            return OriginalThemeFileName;
         }
+
         public static void Create(double newHue, bool useWindowsWallpaper)
         {
-            if (Directory.Exists(outputFolderPath) == false)
+            if (Directory.Exists(OutputFolderPath) == false)
             {
-                Directory.CreateDirectory(outputFolderPath);
+                Directory.CreateDirectory(OutputFolderPath);
             }
-            if (File.Exists(newThemeFilePath))
-                File.Delete(newThemeFilePath);
-            if (File.Exists(newZipFileName))
-                File.Delete(newZipFileName);
-            if (File.Exists(outputFolderPath + newBackgroundColorFileName))
-                File.Delete(outputFolderPath + newBackgroundColorFileName);
-            if (File.Exists(newThemeFileName))
-                File.Delete(newThemeFileName);
 
-            string[] lines = File.ReadAllLines(originalThemeFileName);
+            if (File.Exists(NewThemeFilePath))
+                File.Delete(NewThemeFilePath);
+            if (File.Exists(NewZipFileName))
+                File.Delete(NewZipFileName);
+            if (File.Exists(OutputFolderPath + NewBackgroundColorFileName))
+                File.Delete(OutputFolderPath + NewBackgroundColorFileName);
+            if (File.Exists(NewThemeFileName))
+                File.Delete(NewThemeFileName);
+
+            string[] lines = File.ReadAllLines(OriginalThemeFileName);
 
             Dictionary<string, string> colorsDic = new Dictionary<string, string>();
 
@@ -85,20 +88,20 @@ namespace TelegramThemeCreator
                 }
             }
 
-            using (StreamWriter file = new StreamWriter(newThemeFilePath))
+            using (StreamWriter file = new StreamWriter(NewThemeFilePath))
                 foreach (var entry in colorsDic)
                     file.WriteLine("{0}:{1};", entry.Key, entry.Value);
             if (useWindowsWallpaper)
             {
-                File.Copy(SysUtils.GetWinWallpaperFilePath(), outputFolderPath + newBackgroundImageFileName);
+                File.Copy(SysUtils.GetWinWallpaperFilePath(), OutputFolderPath + NewBackgroundImageFileName);
             }
             else
             {
-                CreateImage(100, 100, outputFolderPath, newBackgroundColorFileName);
+                CreateImage(100, 100, OutputFolderPath, NewBackgroundColorFileName);
             }
 
-            ZipFile.CreateFromDirectory(outputFolderPath, newZipFileName);
-            Directory.Delete(outputFolderPath, true);
+            ZipFile.CreateFromDirectory(OutputFolderPath, NewZipFileName);
+            Directory.Delete(OutputFolderPath, true);
             Process.Start(Environment.CurrentDirectory);
         }
 

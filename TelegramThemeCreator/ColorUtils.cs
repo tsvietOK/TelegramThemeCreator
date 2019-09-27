@@ -9,7 +9,7 @@
 
         public static bool StandartColor(string hexColor)
         {
-            return (hexColor.StartsWith("#ffffff")) || (hexColor.StartsWith("#000000"));
+            return hexColor.StartsWith("#ffffff") || hexColor.StartsWith("#000000");
         }
     }
 }

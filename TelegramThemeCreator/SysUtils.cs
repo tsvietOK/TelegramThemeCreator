@@ -16,6 +16,7 @@ namespace TelegramThemeCreator
             {
                 regColor = null;
             }
+
             return regColor;
         }
 

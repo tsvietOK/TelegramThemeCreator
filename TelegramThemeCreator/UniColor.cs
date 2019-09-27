@@ -7,35 +7,34 @@ namespace TelegramThemeCreator
 {
     public class UniColor : ICloneable
     {
-
-        private static readonly Dictionary<HexFormat, int[]> _hexFormatDic = new Dictionary<HexFormat, int[]>()
+        private static readonly Dictionary<HexFormat, int[]> HexFormatDic = new Dictionary<HexFormat, int[]>()
         {
-            { HexFormat.RGB, new int[]{ 0, 1, 2} },
-            { HexFormat.ARGB, new int[]{ 3, 0, 1, 2} },
-            { HexFormat.RGBA, new int[]{ 0, 1, 2, 3} },
-            { HexFormat.BGR, new int[]{ 2, 1, 0} },
-            { HexFormat.ABGR, new int[]{ 3, 2, 1, 0} },
-            { HexFormat.BGRA, new int[]{ 2, 1, 0, 3} }
+            { HexFormat.RGB, new int[] { 0, 1, 2 } },
+            { HexFormat.ARGB, new int[] { 3, 0, 1, 2 } },
+            { HexFormat.RGBA, new int[] { 0, 1, 2, 3 } },
+            { HexFormat.BGR, new int[] { 2, 1, 0 } },
+            { HexFormat.ABGR, new int[] { 3, 2, 1, 0 } },
+            { HexFormat.BGRA, new int[] { 2, 1, 0, 3 } }
         };
 
         #region RGB
 
         public byte Red
         {
-            get => (byte)(_rgb[0] * 255);
-            set => _rgb[0] = value / 255.0;
+            get => (byte)(rgb[0] * 255);
+            set => rgb[0] = value / 255.0;
         }
 
         public byte Green
         {
-            get => (byte)(_rgb[1] * 255);
-            set => _rgb[1] = value / 255.0;
+            get => (byte)(rgb[1] * 255);
+            set => rgb[1] = value / 255.0;
         }
 
         public byte Blue
         {
-            get => (byte)(_rgb[2] * 255);
-            set => _rgb[2] = value / 255.0;
+            get => (byte)(rgb[2] * 255);
+            set => rgb[2] = value / 255.0;
         }
 
         #endregion
@@ -46,17 +45,17 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = _rgb.Max();
-                var min = _rgb.Min();
+                var max = rgb.Max();
+                var min = rgb.Min();
                 double h;
-                if (max == min || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2])))
+                if (max == min || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])))
                     h = 0;
-                else if (max == _rgb[0])
-                    h = 60 * ((_rgb[1] - _rgb[2]) / (max - min));
-                else if (max == _rgb[1])
-                    h = 60 * (2 + (_rgb[2] - _rgb[0]) / (max - min));
+                else if (max == rgb[0])
+                    h = 60 * ((rgb[1] - rgb[2]) / (max - min));
+                else if (max == rgb[1])
+                    h = 60 * (2 + (rgb[2] - rgb[0]) / (max - min));
                 else
-                    h = 60 * (4 + (_rgb[0] - _rgb[1]) / (max - min));
+                    h = 60 * (4 + (rgb[0] - rgb[1]) / (max - min));
                 if (h < 0)
                     h += 360;
                 return h;
@@ -75,10 +74,10 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = _rgb.Max();
-                var min = _rgb.Min();
+                var max = rgb.Max();
+                var min = rgb.Min();
                 double s;
-                if (max == 0 || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2]) && (_rgb[0] == 0)))
+                if (max == 0 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 0)))
                     s = 0;
                 else
                     s = (max - min) / max;
@@ -98,7 +97,7 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = _rgb.Max();
+                var max = rgb.Max();
                 return max;
             }
             set
@@ -115,21 +114,20 @@ namespace TelegramThemeCreator
         {
             var c = v * s;
             var h_prime = h / 60;
-            var x = c * (1 - Math.Abs(h_prime % 2 - 1));
+            var x = c * (1 - Math.Abs((h_prime % 2) - 1));
             var m = v - c;
             var k = (int)h_prime;
             int x_index = 2 - Math.Abs((k + 1) % 3);
             int c_index = ((k + 1) / 2) % 3;
-            int O_index = ((k + 4) / 2) % 3;
+            int o_index = ((k + 4) / 2) % 3;
 
             var indexes = new StringBuilder("###");
             indexes[x_index] = 'X';
             indexes[c_index] = 'C';
-            indexes[O_index] = '0';
-            var a = indexes.ToString();
-            _rgb[x_index] = x + m;
-            _rgb[c_index] = c + m;
-            _rgb[O_index] = 0 + m;
+            indexes[o_index] = '0';
+            rgb[x_index] = x + m;
+            rgb[c_index] = c + m;
+            rgb[o_index] = 0 + m;
         }
 
         #endregion
@@ -140,12 +138,12 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = this._rgb.Max();
-                var min = this._rgb.Min();
+                var max = rgb.Max();
+                var min = rgb.Min();
                 double s;
-                if (max == 0 || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2]) && (_rgb[0] == 0)))
+                if (max == 0 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 0)))
                     s = 0;
-                else if (min == 1 || ((_rgb[0] == _rgb[1]) && (_rgb[0] == _rgb[2]) && (_rgb[0] == 1)))
+                else if (min == 1 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 1)))
                     s = 0;
                 else
                     s = (max - min) / (1 - Math.Abs(max + min - 1));
@@ -165,8 +163,8 @@ namespace TelegramThemeCreator
         {
             get
             {
-                var max = this._rgb.Max();
-                var min = this._rgb.Min();
+                var max = rgb.Max();
+                var min = rgb.Min();
                 double l = (max + min) / 2;
                 return l;
             }
@@ -182,32 +180,31 @@ namespace TelegramThemeCreator
 
         private void SetHSL(double h, double s, double l)
         {
-            var c = (1 - Math.Abs(2 * l - 1)) * s;
+            var c = (1 - Math.Abs((2 * l) - 1)) * s;
             var h_prime = h / 60;
-            var x = c * (1 - Math.Abs(h_prime % 2 - 1));
-            var m = l - c / 2;
+            var x = c * (1 - Math.Abs((h_prime % 2) - 1));
+            var m = l - (c / 2);
             var k = (int)h_prime;
             int x_index = 2 - Math.Abs((k + 1) % 3);
             int c_index = ((k + 1) / 2) % 3;
-            int O_index = ((k + 4) / 2) % 3;
+            int o_index = ((k + 4) / 2) % 3;
 
             var indexes = new StringBuilder("###");
             indexes[x_index] = 'X';
             indexes[c_index] = 'C';
-            indexes[O_index] = '0';
-            var a = indexes.ToString();
-            _rgb[x_index] = x + m;
-            _rgb[c_index] = c + m;
-            _rgb[O_index] = 0 + m;
+            indexes[o_index] = '0';
+            rgb[x_index] = x + m;
+            rgb[c_index] = c + m;
+            rgb[o_index] = 0 + m;
         }
 
         #endregion
 
         #endregion
 
-        public byte Alpha = 255;
+        private byte Alpha = 255;
 
-        private double[] _rgb = new double[3];
+        private double[] rgb = new double[3];
 
         private UniColor()
         { }
@@ -237,10 +234,10 @@ namespace TelegramThemeCreator
                 throw new ArgumentException($"Unknown invalid length of input string '{hex}'");
             var b = hex.Select((x, i) => new { Value = x, Group = i / 2 })
                 .GroupBy(x => x.Group)
-                .Select(x => string.Join("", x.Select(y => y.Value)))
+                .Select(x => string.Join(string.Empty, x.Select(y => y.Value)))
                 .Select(x => byte.Parse(x, System.Globalization.NumberStyles.HexNumber))
                 .ToArray();
-            var indexes = _hexFormatDic[hexFormat];
+            var indexes = HexFormatDic[hexFormat];
             if (b.Length != indexes.Length)
                 throw new ArgumentException($"Invalid hex format specified '{hexFormat.ToString()}' for string '{hex}'");
             Red = b[indexes[0]];
@@ -252,27 +249,28 @@ namespace TelegramThemeCreator
 
         public static UniColor FromHSV(float hue, float sat, float val)
         {
-            var result = FromHSV(hue, sat, val, 255);
-            return result;
+            return FromHSV(hue, sat, val, 255);
         }
 
         public static UniColor FromHSV(float hue, float sat, float val, byte alpha)
         {
-            var result = new UniColor();
+            var result = new UniColor()
+            {
+                Alpha = alpha
+            };
             result.SetHSV(hue, sat, val);
             return result;
         }
 
-
         public UniColor Clone()
         {
-            var result = (UniColor)this.MemberwiseClone();
+            var result = (UniColor)MemberwiseClone();
             return result;
         }
 
         object ICloneable.Clone()
         {
-            var result = new UniColor(this.Red, this.Green, this.Blue, this.Alpha);
+            var result = new UniColor(Red, Green, Blue, Alpha);
             return result;
         }
 
@@ -291,14 +289,14 @@ namespace TelegramThemeCreator
         public string ToHex(HexFormat hexFormat)
         {
             var b = new byte[4];
-            var indexes = _hexFormatDic[hexFormat];
+            var indexes = HexFormatDic[hexFormat];
             b[indexes[0]] = Red;
             b[indexes[1]] = Green;
             b[indexes[2]] = Blue;
             if (indexes.Length == 4)
                 b[indexes[3]] = Alpha;
             var hex = b.Take(indexes.Length).Select(x => x.ToString("X2"));
-            var result = "#" + string.Join("", hex);
+            var result = "#" + string.Join(string.Empty, hex);
             return result;
         }
     }

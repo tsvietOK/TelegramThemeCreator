@@ -1,4 +1,12 @@
 ﻿namespace TelegramThemeCreator
 {
-    public enum HexFormat { RGB, ARGB, RGBA, BGR, BGRA, ABGR }
+    public enum HexFormat
+    {
+        RGB,
+        ARGB,
+        RGBA,
+        BGR,
+        BGRA,
+        ABGR
+    }
 }

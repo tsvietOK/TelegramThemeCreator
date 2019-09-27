@@ -34,7 +34,6 @@ namespace TelegramThemeCreator
             }
 
             RainbowRectangle.Fill = gradient;
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -61,24 +60,24 @@ namespace TelegramThemeCreator
             ChangeColor(e.GetPosition(RainbowRectangle).X);
         }
 
-        public void ChangeColor(double selectedPosition)
+        private void ChangeColor(double selectedPosition)
         {
-            selectedPosition = (selectedPosition < 0 ? 0 : (selectedPosition > 360 ? 360 : selectedPosition));
+            selectedPosition = selectedPosition < 0 ? 0 : (selectedPosition > 360 ? 360 : selectedPosition);
             AnimateSelector(selectedPosition);
         }
 
-        private System.Windows.Threading.DispatcherTimer SelectorAnimationTimer;
+        private System.Windows.Threading.DispatcherTimer selectorAnimationTimer;
 
         private void AnimateSelector(double selectedPosition)
         {
-            SelectorAnimationTimer?.Stop();
-            SelectorAnimationTimer = new System.Windows.Threading.DispatcherTimer()
+            selectorAnimationTimer?.Stop();
+            selectorAnimationTimer = new System.Windows.Threading.DispatcherTimer()
             {
                 Tag = selectedPosition,
                 Interval = TimeSpan.FromMilliseconds(10)
             };
-            SelectorAnimationTimer.Tick += SelectorAnimationTimer_Tick;
-            SelectorAnimationTimer.Start();
+            selectorAnimationTimer.Tick += SelectorAnimationTimer_Tick;
+            selectorAnimationTimer.Start();
         }
 
         private void SelectorAnimationTimer_Tick(object sender, EventArgs e)
@@ -117,8 +116,10 @@ namespace TelegramThemeCreator
 
         private void MainWindow1_Initialized(object sender, EventArgs e)
         {
-            if (SysUtils.GetSystemAccent() == null) GetSystemAccentButton.Visibility = Visibility.Hidden;
-            if (!File.Exists(SysUtils.GetWinWallpaperFilePath())) UseWindowsWallpaperCheckBox.IsEnabled = false;
+            if (SysUtils.GetSystemAccent() == null) 
+                GetSystemAccentButton.Visibility = Visibility.Hidden;
+            if (!File.Exists(SysUtils.GetWinWallpaperFilePath())) 
+                UseWindowsWallpaperCheckBox.IsEnabled = false;
             CheckFile(Theme.GetOriginalThemeFileName());
 
             MoveSelector(0);
@@ -129,7 +130,7 @@ namespace TelegramThemeCreator
             Theme.Create(new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
         }
 
-        public void CheckFile(string file)
+        private void CheckFile(string file)
         {
             if (!File.Exists(file))
             {
