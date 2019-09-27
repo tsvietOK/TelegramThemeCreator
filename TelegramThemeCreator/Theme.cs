@@ -12,8 +12,10 @@ namespace TelegramThemeCreator
     {
         private const string originalThemeFileName = @"Resource\colors.tdesktop-palette";
         private const string outputFolderPath = @"Output\";
-        private const string newThemeFileName = @"colors.tdesktop-theme";
-        private const string newZipFileName = @"Your_theme.tdesktop-theme";
+        private const string newThemeFileName = "colors.tdesktop-theme";
+        private const string newZipFileName = "Your_theme.tdesktop-theme";
+        private const string newBackgroundColorFileName = "tiled.jpg";
+        private const string newBackgroundImageFileName = "background.jpg";
         private const string newThemeFilePath = outputFolderPath + newThemeFileName;
         public static string GetOriginalThemeFileName()
         {
@@ -29,8 +31,8 @@ namespace TelegramThemeCreator
                 File.Delete(newThemeFilePath);
             if (File.Exists(newZipFileName))
                 File.Delete(newZipFileName);
-            if (File.Exists(outputFolderPath + "tiled.jpg"))
-                File.Delete(outputFolderPath + "tiled.jpg");
+            if (File.Exists(outputFolderPath + newBackgroundColorFileName))
+                File.Delete(outputFolderPath + newBackgroundColorFileName);
             if (File.Exists(newThemeFileName))
                 File.Delete(newThemeFileName);
 
@@ -78,11 +80,7 @@ namespace TelegramThemeCreator
 
                     if (changed)
                     {
-                        string newHexColor;
-                        if (colorValue.Length == 9)
-                            newHexColor = valColor.ToHex(HexFormat.RGBA);
-                        else
-                            newHexColor = valColor.ToHex(HexFormat.RGB);
+                        string newHexColor = colorValue.Length == 9 ? valColor.ToHex(HexFormat.RGBA) : valColor.ToHex(HexFormat.RGB);
                         colorsDic[item.Key] = newHexColor;
                     }
                 }
@@ -93,11 +91,11 @@ namespace TelegramThemeCreator
                     file.WriteLine("{0}:{1};", entry.Key, entry.Value);
             if (useWindowsWallpaper)
             {
-                File.Copy(SysUtils.GetWinWallpaperFilePath(), outputFolderPath + "background.jpg");
+                File.Copy(SysUtils.GetWinWallpaperFilePath(), outputFolderPath + newBackgroundImageFileName);
             }
             else
             {
-                CreateImage(100, 100, outputFolderPath, "tiled.jpg");
+                CreateImage(100, 100, outputFolderPath, newBackgroundColorFileName);
             }
 
             ZipFile.CreateFromDirectory(outputFolderPath, newZipFileName);

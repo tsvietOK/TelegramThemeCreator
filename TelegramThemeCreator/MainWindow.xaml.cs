@@ -1,9 +1,9 @@
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.IO;
 
 namespace TelegramThemeCreator
 {
@@ -22,9 +22,11 @@ namespace TelegramThemeCreator
             byte alpha = 255;
             float saturation = 1;
             float brightness = 1;
-            LinearGradientBrush gradient = new LinearGradientBrush();
-            gradient.StartPoint = new Point(0, 0);
-            gradient.EndPoint = new Point(1, 0);
+            LinearGradientBrush gradient = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 0)
+            };
             int n = 360;
             for (int i = 0; i < n; i++)
             {
