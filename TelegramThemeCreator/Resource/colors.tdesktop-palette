@@ -142,6 +142,7 @@ dialogsSentIconFg: #20eeda; // chat list sent message tick / double tick icon
 dialogsUnreadBg: #05a091; // chat list unread badge background for not muted chat
 dialogsUnreadBgMuted: #495159; // chat list unread badge background for muted chat
 dialogsUnreadFg: #ffffff; // chat list unread badge text
+dialogsOnlineBadgeFg: #3ed853; // chat list online status
 dialogsBgOver: #353c43; // chat list background with mouse over
 dialogsNameFgOver: windowBoldFgOver; // chat list name text with mouse over
 dialogsChatIconFgOver: dialogsNameFgOver; // chat list group or channel icon with mouse over
@@ -170,6 +171,7 @@ dialogsSentIconFgActive: dialogsTextFgActive; // chat list sent message tick / d
 dialogsUnreadBgActive: dialogsTextFgActive; // chat list unread badge background for not muted chat for current (active) chat
 dialogsUnreadBgMutedActive: #cbf7e9; // chat list unread badge background for muted chat for current (active) chat
 dialogsUnreadFgActive: #039d8e; // chat list unread badge text for current (active) chat
+dialogsOnlineBadgeFgActive: #ffffff; // chat list online status for current (active) chat
 dialogsRippleBg: #43474d; // 
 dialogsRippleBgActive: #12a798; // 
 dialogsForwardBg: dialogsBgActive; // forwarding panel background (when forwarding messages in the smallest window size)
