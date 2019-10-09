@@ -56,8 +56,7 @@ namespace TelegramThemeCreator
                 }
             }
 
-            foreach (Color color in colorList.Where(x => x.IsColor() == true)
-                                             .Where(y => y.IsStandartColor() == false))
+            foreach (Color color in colorList.Where(x => x.IsColor() == true && x.IsStandartColor() == false))
             {
                 UniColor colorValue = color.GetValue();
                 bool changed = false;
