@@ -5,12 +5,16 @@ namespace TelegramThemeCreator
 {
     public static class SysUtils
     {
+        private const string RegistryDwmKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM";
+        private const string RegistryDwmValue = "AccentColor";
+        private const string WindowsWallpaperFolderPath = @"\Microsoft\Windows\Themes\TranscodedWallpaper";
+
         public static string GetSystemAccent()
         {
             string regColor;
             try
             {
-                regColor = ((int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "AccentColor", null)).ToString("X8");
+                regColor = ((int)Registry.GetValue(RegistryDwmKey, RegistryDwmValue, null)).ToString("X8");
             }
             catch
             {
@@ -22,7 +26,7 @@ namespace TelegramThemeCreator
 
         public static string GetWinWallpaperFilePath()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\TranscodedWallpaper";
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + WindowsWallpaperFolderPath;
         }
     }
 }
