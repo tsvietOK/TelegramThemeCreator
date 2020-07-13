@@ -8,10 +8,12 @@ using System.Windows.Media;
 namespace TelegramThemeCreator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Windows.Threading.DispatcherTimer selectorAnimationTimer;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -19,24 +21,21 @@ namespace TelegramThemeCreator
 
         private void Rectangle_Initialized(object sender, EventArgs e)
         {
-            byte alpha = 255;
-            float saturation = 1;
-            float brightness = 1;
             LinearGradientBrush gradient = new LinearGradientBrush
             {
                 StartPoint = new Point(0, 0),
                 EndPoint = new Point(1, 0)
             };
-            int n = 360;
-            for (int i = 0; i < n; i++)
+
+            for (int i = 0; i < 360; i++)
             {
-                gradient.GradientStops.Add(new GradientStop(UniColor.FromHSV(i, saturation, brightness, alpha).ToMediaColor(), i / 360f));
+                gradient.GradientStops.Add(new GradientStop(UniColor.FromHSV(i, 1, 1, 255).ToMediaColor(), i / 360f));
             }
 
             RainbowRectangle.Fill = gradient;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -46,9 +45,15 @@ namespace TelegramThemeCreator
             Point pointToWindow = e.GetPosition(RainbowRectangle);
             HueValue.Text = pointToWindow.X.ToString();
             if (pointToWindow.X < 0)
+            {
                 HueValue.Text = "0";
+            }
+
             if (pointToWindow.X > 360)
+            {
                 HueValue.Text = "360";
+            }
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 ChangeColor(pointToWindow.X);
@@ -65,8 +70,6 @@ namespace TelegramThemeCreator
             selectedPosition = selectedPosition < 0 ? 0 : (selectedPosition > 360 ? 360 : selectedPosition);
             AnimateSelector(selectedPosition);
         }
-
-        private System.Windows.Threading.DispatcherTimer selectorAnimationTimer;
 
         private void AnimateSelector(double selectedPosition)
         {
@@ -87,11 +90,16 @@ namespace TelegramThemeCreator
             var currentPosition = Canvas.GetLeft(Selector);
             var step = selectedPosition - currentPosition;
             if (Math.Abs(step) > 1)
+            {
                 step /= 5;
+            }
+
             var nextPosition = currentPosition += step;
             MoveSelector(nextPosition);
             if (nextPosition == selectedPosition)
+            {
                 timer.Stop();
+            }
         }
 
         private void MoveSelector(double position)
@@ -114,13 +122,23 @@ namespace TelegramThemeCreator
             ChangeColor(accentColor.Hue);
         }
 
-        private void MainWindow1_Initialized(object sender, EventArgs e)
+        private void MainWindow_Initialized(object sender, EventArgs e)
         {
+            if (!File.Exists(Theme.GetOriginalThemeFileName()))
+            {
+                MessageBox.Show("Original theme file does not exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
+
             if (SysUtils.GetSystemAccent() == null)
+            {
                 GetSystemAccentButton.Visibility = Visibility.Hidden;
+            }
+
             if (!File.Exists(SysUtils.GetWinWallpaperFilePath()))
+            {
                 UseWindowsWallpaperCheckBox.IsEnabled = false;
-            CheckFile(Theme.GetOriginalThemeFileName());
+            }
 
             MoveSelector(0);
         }
@@ -130,19 +148,12 @@ namespace TelegramThemeCreator
             Theme.Create(new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
         }
 
-        private void CheckFile(string file)
-        {
-            if (!File.Exists(file))
-            {
-                MessageBox.Show(file + " does not exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-            }
-        }
-
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
+            {
                 DragMove();
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

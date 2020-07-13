@@ -9,26 +9,30 @@ namespace TelegramThemeCreator
     {
         private static readonly Dictionary<HexFormat, int[]> HexFormatDic = new Dictionary<HexFormat, int[]>()
         {
-            { HexFormat.RGB, new int[] { 0, 1, 2 } },
+            { HexFormat.RGB,  new int[] { 0, 1, 2 } },
             { HexFormat.ARGB, new int[] { 3, 0, 1, 2 } },
             { HexFormat.RGBA, new int[] { 0, 1, 2, 3 } },
-            { HexFormat.BGR, new int[] { 2, 1, 0 } },
+            { HexFormat.BGR,  new int[] { 2, 1, 0 } },
             { HexFormat.ABGR, new int[] { 3, 2, 1, 0 } },
             { HexFormat.BGRA, new int[] { 2, 1, 0, 3 } }
         };
 
-        private byte Alpha = 255;
-
         private double[] rgb = new double[3];
 
-        public UniColor(System.Drawing.Color color) : this(color.R, color.G, color.B, color.A)
-        { }
+        public UniColor(System.Drawing.Color color)
+            : this(color.R, color.G, color.B, color.A)
+        {
+        }
 
-        public UniColor(System.Windows.Media.Color color) : this(color.R, color.G, color.B, color.A)
-        { }
+        public UniColor(System.Windows.Media.Color color)
+            : this(color.R, color.G, color.B, color.A)
+        {
+        }
 
-        public UniColor(byte red, byte green, byte blue) : this(red, green, blue, 255)
-        { }
+        public UniColor(byte red, byte green, byte blue)
+            : this(red, green, blue, 255)
+        {
+        }
 
         public UniColor(byte red, byte green, byte blue, byte alpha)
         {
@@ -41,9 +45,15 @@ namespace TelegramThemeCreator
         public UniColor(string hex, HexFormat hexFormat)
         {
             if (hex.StartsWith("#"))
+            {
                 hex = hex.Substring(1);
+            }
+
             if (hex.Length != 8 && hex.Length != 6)
+            {
                 throw new ArgumentException($"Unknown invalid length of input string '{hex}'");
+            }
+
             var b = hex.Select((x, i) => new { Value = x, Group = i / 2 })
                 .GroupBy(x => x.Group)
                 .Select(x => string.Join(string.Empty, x.Select(y => y.Value)))
@@ -51,16 +61,24 @@ namespace TelegramThemeCreator
                 .ToArray();
             var indexes = HexFormatDic[hexFormat];
             if (b.Length != indexes.Length)
-                throw new ArgumentException($"Invalid hex format specified '{hexFormat.ToString()}' for string '{hex}'");
+            {
+                throw new ArgumentException($"Invalid hex format specified '{hexFormat}' for string '{hex}'");
+            }
+
             Red = b[indexes[0]];
             Green = b[indexes[1]];
             Blue = b[indexes[2]];
             if (indexes.Length == 4)
+            {
                 Alpha = b[indexes[3]];
+            }
         }
 
         private UniColor()
-        { }
+        {
+        }
+
+        public byte Alpha { get; set; } = 255;
 
         public byte Red
         {
@@ -88,21 +106,34 @@ namespace TelegramThemeCreator
                 var min = rgb.Min();
                 double h;
                 if (max == min || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2])))
+                {
                     h = 0;
+                }
                 else if (max == rgb[0])
+                {
                     h = 60 * ((rgb[1] - rgb[2]) / (max - min));
+                }
                 else if (max == rgb[1])
+                {
                     h = 60 * (2 + ((rgb[2] - rgb[0]) / (max - min)));
+                }
                 else
+                {
                     h = 60 * (4 + ((rgb[0] - rgb[1]) / (max - min)));
+                }
+
                 if (h < 0)
+                {
                     h += 360;
+                }
+
                 return h;
             }
+
             set
             {
-                //if (value < 0 || value > 360)
-                //    throw new ArgumentException($"Saturation value should should be inside [0,360]");
+                ////if (value < 0 || value > 360)
+                ////    throw new ArgumentException($"Saturation value should should be inside [0,360]");
                 SetHSV(value, SaturationV, Value);
             }
         }
@@ -115,17 +146,28 @@ namespace TelegramThemeCreator
                 var min = rgb.Min();
                 double s;
                 if (max == 0 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 0)))
+                {
                     s = 0;
+                }
                 else
+                {
                     s = (max - min) / max;
+                }
+
                 return s;
             }
+
             set
             {
                 if (value > 1)
+                {
                     value = 1;
+                }
                 else if (value < 0)
+                {
                     value = 0;
+                }
+
                 SetHSV(Hue, value, Value);
             }
         }
@@ -137,12 +179,18 @@ namespace TelegramThemeCreator
                 var max = rgb.Max();
                 return max;
             }
+
             set
             {
                 if (value > 1)
+                {
                     value = 1;
+                }
                 else if (value < 0)
+                {
                     value = 0;
+                }
+
                 SetHSV(Hue, SaturationV, value);
             }
         }
@@ -155,19 +203,32 @@ namespace TelegramThemeCreator
                 var min = rgb.Min();
                 double s;
                 if (max == 0 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 0)))
+                {
                     s = 0;
+                }
                 else if (min == 1 || ((rgb[0] == rgb[1]) && (rgb[0] == rgb[2]) && (rgb[0] == 1)))
+                {
                     s = 0;
+                }
                 else
+                {
                     s = (max - min) / (1 - Math.Abs(max + min - 1));
+                }
+
                 return s;
             }
+
             set
             {
                 if (value > 1)
+                {
                     value = 1;
+                }
                 else if (value < 0)
+                {
                     value = 0;
+                }
+
                 SetHSL(Hue, value, Value);
             }
         }
@@ -178,15 +239,20 @@ namespace TelegramThemeCreator
             {
                 var max = rgb.Max();
                 var min = rgb.Min();
-                double l = (max + min) / 2;
-                return l;
+                return (max + min) / 2;
             }
+
             set
             {
                 if (value > 1)
+                {
                     value = 1;
+                }
                 else if (value < 0)
+                {
                     value = 0;
+                }
+
                 SetHSV(Hue, SaturationL, value);
             }
         }
@@ -223,9 +289,13 @@ namespace TelegramThemeCreator
             var color = ToDrawingColor();
             string result = "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
             if (color.A != 255)
+            {
                 result += color.A.ToString("X2");
+            }
+
             return result;
         }
+
         private void SetHSV(double h, double s, double v)
         {
             var c = v * s;
