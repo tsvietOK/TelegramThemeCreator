@@ -1,9 +1,23 @@
-﻿namespace TelegramThemeCreator
+﻿using TelegramThemeCreator.Enums;
+using TelegramThemeCreator.Utils;
+
+namespace TelegramThemeCreator
 {
+    /// <summary>
+    /// Represents a theme color.
+    /// </summary>
     public class ThemeColor
     {
-        private string link;
+        /// <summary>
+        /// Color reference to another color.
+        /// </summary>
+        private string colorReference;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThemeColor" /> class with specified color name and value.
+        /// </summary>
+        /// <param name="name">The color name.</param>
+        /// <param name="value">The color value.</param>
         public ThemeColor(string name, string value)
         {
             Name = name;
@@ -24,24 +38,39 @@
             }
             else
             {
-                link = value;
+                colorReference = value;
                 IsColor = false;
                 IsStandardColor = false;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the name of the color.
+        /// </summary>
         public string Name { get; set; }
 
-
+        /// <summary>
+        /// Gets or sets the value of the color.
+        /// </summary>
         public UniColor Value { get; set; }
 
-        public bool IsColor { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether the current ThemeColor value is a color.
+        /// </summary>
+        public bool IsColor { get; private set; }
 
-        public bool IsStandardColor { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether the current ThemeColor value is a standard color.
+        /// </summary>
+        public bool IsStandardColor { get; private set; }
 
-        public string GetColor()
+        /// <summary>
+        /// Gets a hex color or reference to another color.
+        /// </summary>
+        /// <returns>A string containing a hex color or reference to another color.</returns>
+        public string GetHexColor()
         {
-            return IsColor ? Value.ToHex() : link;
+            return IsColor ? Value.ToHex() : colorReference;
         }
     }
 }

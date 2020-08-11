@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TelegramThemeCreator.Utils;
 
 namespace TelegramThemeCreator
 {
@@ -16,9 +17,11 @@ namespace TelegramThemeCreator
         private const string OutputFolderPath = @"Output\";
         private const string NewThemeFileName = "colors.tdesktop-theme";
         private const string NewZipFileName = "Your_theme.tdesktop-theme";
-        private const string NewBackgroundColorFileName = "tiled.jpg";
+        private const string DefaultBackgroundColorFileName = "tiled.jpg";
         private const string NewBackgroundImageFileName = "background.jpg";
         private const string NewThemeFilePath = OutputFolderPath + NewThemeFileName;
+        private const int DefaultBackgroundWidth = 100;
+        private const int DefaultBackgroundHeight = 100;
 
         public static List<ThemeColor> ColorList { get; set; } = new List<ThemeColor>();
 
@@ -44,9 +47,9 @@ namespace TelegramThemeCreator
                 File.Delete(NewZipFileName);
             }
 
-            if (File.Exists(OutputFolderPath + NewBackgroundColorFileName))
+            if (File.Exists(OutputFolderPath + DefaultBackgroundColorFileName))
             {
-                File.Delete(OutputFolderPath + NewBackgroundColorFileName);
+                File.Delete(OutputFolderPath + DefaultBackgroundColorFileName);
             }
 
             if (File.Exists(NewThemeFileName))
@@ -107,7 +110,7 @@ namespace TelegramThemeCreator
             {
                 foreach (var color in ColorList)
                 {
-                    file.WriteLine($"{color.Name}:{color.GetColor()};");
+                    file.WriteLine($"{color.Name}:{color.GetHexColor()};");
                 }
             }
 
@@ -117,21 +120,14 @@ namespace TelegramThemeCreator
             }
             else
             {
-                CreateImage(100, 100, OutputFolderPath, NewBackgroundColorFileName);
+                BitmapUtils.GenerateImage(DefaultBackgroundWidth, DefaultBackgroundHeight, Color.FromArgb(255, 12, 12, 12))
+                    .SaveImage(OutputFolderPath, DefaultBackgroundColorFileName, ImageFormat.Jpeg);
             }
 
             ZipFile.CreateFromDirectory(OutputFolderPath, NewZipFileName);
             Directory.Delete(OutputFolderPath, true);
             Process.Start(Environment.CurrentDirectory);
             ColorList.Clear();
-        }
-
-        public static void CreateImage(int width, int height, string path, string filename)
-        {
-            var bitmap = new Bitmap(width, height);
-            Graphics graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(Color.FromArgb(255, 12, 12, 12));
-            bitmap.Save(path + filename, ImageFormat.Jpeg);
         }
     }
 }
