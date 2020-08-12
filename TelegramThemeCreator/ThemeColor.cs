@@ -72,5 +72,32 @@ namespace TelegramThemeCreator
         {
             return IsColor ? Value.ToHex() : colorReference;
         }
+
+        /// <summary>
+        /// Applies color correction according to newHue parameter.
+        /// </summary>
+        /// <param name="newHue">A double containing new Hue value.</param>
+        public void ApplyColorChange(double newHue)
+        {
+            if ((Value.Hue > 160) && (Value.Hue < 180))
+            {
+                if (Value.SaturationV >= 0.88)
+                {
+                    Value.SaturationV -= 0.2;
+                }
+
+                Value.Hue = newHue;
+            }
+            else if (Value.SaturationV < 0.3)
+            {
+                Value.SaturationV = 0.05;
+                if ((Value.Value > 0.15) && (Value.Value < 0.35))
+                {
+                    Value.Value -= 0.1;
+                }
+
+                Value.Hue /= 10;
+            }
+        }
     }
 }

@@ -68,7 +68,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="ThemeColor.cs" />
+    <Compile Include="ThemeColorConverter.cs" />
     <Compile Include="Utils\BitmapUtils.cs" />
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\SysUtils.cs" />

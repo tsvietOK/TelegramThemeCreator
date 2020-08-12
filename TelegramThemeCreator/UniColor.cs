@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 using TelegramThemeCreator.Enums;
 
 namespace TelegramThemeCreator
@@ -37,11 +38,20 @@ namespace TelegramThemeCreator
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UniColor" /> class with specified <see cref="System.Windows.Media.Color"/> color.
+        /// Initializes a new instance of the <see cref="UniColor" /> class with specified <see cref="Color"/> color.
         /// </summary>
         /// <param name="color">Color value.</param>
-        public UniColor(System.Windows.Media.Color color)
+        public UniColor(Color color)
             : this(color.R, color.G, color.B, color.A)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UniColor" /> class with specified <see cref="Brush"/> brush.
+        /// </summary>
+        /// <param name="brush">A Brush with specified color.</param>
+        public UniColor(Brush brush)
+            : this(((SolidColorBrush)brush).Color)
         {
         }
 
@@ -361,12 +371,12 @@ namespace TelegramThemeCreator
         }
 
         /// <summary>
-        /// Converts <see cref="UniColor" /> to <see cref="System.Windows.Media.Color" />.
+        /// Converts <see cref="UniColor" /> to <see cref="Color" />.
         /// </summary>
-        /// <returns><see cref="System.Windows.Media.Color" /></returns>
-        public System.Windows.Media.Color ToMediaColor()
+        /// <returns><see cref="Color" /></returns>
+        public Color ToMediaColor()
         {
-            return System.Windows.Media.Color.FromArgb(Alpha, Red, Green, Blue);
+            return Color.FromArgb(Alpha, Red, Green, Blue);
         }
 
         /// <summary>

@@ -147,7 +147,7 @@ namespace TelegramThemeCreator
 
         private void CreateThemeButton_Click(object sender, RoutedEventArgs e)
         {
-            Theme.Create(new UniColor(((SolidColorBrush)ColorSquare.Fill).Color).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
+            Theme.Create(new UniColor(ColorSquare.Fill).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
         }
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
