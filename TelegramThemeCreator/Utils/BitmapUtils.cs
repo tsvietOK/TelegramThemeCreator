@@ -24,7 +24,7 @@ namespace TelegramThemeCreator.Utils
         }
 
         /// <summary>
-        /// Saves <see cref="Bitmap" /> image to specified folder with required name and image fromat.
+        /// Saves <see cref="Bitmap" /> image to specified folder with required name and image format.
         /// </summary>
         /// <param name="bitmap">Bitmap which is will be saved.</param>
         /// <param name="path">A string that contains path where the image will be saved.</param>

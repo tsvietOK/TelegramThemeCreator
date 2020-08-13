@@ -401,6 +401,7 @@ namespace TelegramThemeCreator
         /// <param name="h">A double hue value.</param>
         /// <param name="s">A double saturation value.</param>
         /// <param name="v">A double brightness value.</param>
+        /// HSV to RGB https://en.wikipedia.org/wiki/HSL_and_HSV
         private void SetHSV(double h, double s, double v)
         {
             var c = v * s;
@@ -427,6 +428,7 @@ namespace TelegramThemeCreator
         /// <param name="h">A double hue value.</param>
         /// <param name="s">A double saturation value.</param>
         /// <param name="l">A double brightness value.</param>
+        /// HSL to RGB https://en.wikipedia.org/wiki/HSL_and_HSV
         private void SetHSL(double h, double s, double l)
         {
             var c = (1 - Math.Abs((2 * l) - 1)) * s;

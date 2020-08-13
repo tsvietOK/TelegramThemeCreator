@@ -12,13 +12,13 @@ namespace TelegramThemeCreator
         /// <summary>
         /// Gets list of theme colors from file.
         /// </summary>
-        /// <param name="fileName">A string that contains source theme file name.</param>
+        /// <param name="filePath">A string that contains source theme file path.</param>
         /// <returns>List of theme colors.</returns>
-        public static List<ThemeColor> GetThemeColorsListFromFile(string fileName)
+        public static List<ThemeColor> GetThemeColorsListFromFile(string filePath)
         {
             List<ThemeColor> themeColors = new List<ThemeColor>();
 
-            string[] lines = File.ReadAllLines(fileName);
+            string[] lines = File.ReadAllLines(filePath);
 
             Regex split = new Regex(@"^(.+)\:(.+)");
 

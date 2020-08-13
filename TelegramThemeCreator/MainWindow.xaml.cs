@@ -126,7 +126,7 @@ namespace TelegramThemeCreator
 
         private void MainWindow_Initialized(object sender, EventArgs e)
         {
-            if (!File.Exists(Theme.GetOriginalThemeFileName()))
+            if (!ThemeCreator.IsSourceThemeFileExists())
             {
                 MessageBox.Show("Original theme file does not exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
@@ -147,7 +147,7 @@ namespace TelegramThemeCreator
 
         private void CreateThemeButton_Click(object sender, RoutedEventArgs e)
         {
-            Theme.Create(new UniColor(ColorSquare.Fill).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
+            ThemeCreator.Create(new UniColor(ColorSquare.Fill).Hue, UseWindowsWallpaperCheckBox.IsChecked == true);
         }
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
