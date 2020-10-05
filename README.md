@@ -1,3 +1,5 @@
+![CodeQL](https://github.com/tsvietOK/TelegramThemeCreator/workflows/CodeQL/badge.svg?branch=master)
+
 # TelegramThemeCreator
 
 Telegram theme creator it is an app that creates dark variant of themes with required hue for Telegram.
