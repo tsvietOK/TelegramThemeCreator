@@ -2,7 +2,7 @@
 
 # TelegramThemeCreator
 
-Telegram theme creator it is an app that creates dark variant of themes with required hue for Telegram.
+Telegram theme creator it is an app that creates dark variant of themes with required accent color for Telegram.
 
 ## Screenshots
 
@@ -15,7 +15,7 @@ Telegram theme creator it is an app that creates dark variant of themes with req
 
 ## Using
 
-Choose color by pressing on hue line or use Windows's 10 system accent color and press button Create theme. In the same folder will appear file Your_theme.tdesktop-theme that you can use.
+Choose color by changing value of color slider or use Windows 10 system accent color and press `Create theme` button. In the same folder will appear file `Your_theme.tdesktop-theme` that you can use.
 
 ## License
 
