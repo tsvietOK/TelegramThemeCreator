@@ -7,7 +7,7 @@ Telegram theme creator it is an app that creates dark variant of themes with req
 ## Screenshots
 
 <p align="center">
-  <img src="./img/Screenshot.png" alt="Telegram theme creator" width=490 height=140 />
+  <img src="./img/Screenshot.png" alt="Telegram theme creator" width=500 height=200 />
   <img src="./img/Red.png" alt="Telegram theme creator" width=450 height=291 />
   <img src="./img/Green.png" alt="Telegram theme creator" width=450 height=291 />
   <img src="./img/Blue.png" alt="Telegram theme creator" width=450 height=291 />
