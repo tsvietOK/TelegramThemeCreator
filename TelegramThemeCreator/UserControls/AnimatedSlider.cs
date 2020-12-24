@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -37,9 +37,9 @@ namespace TelegramThemeCreator.UserControls
 
         /*protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (IsMoveToPointEnabled 
-                && track != null 
-                && track.Thumb != null 
+            if (IsMoveToPointEnabled
+                && track != null
+                && track.Thumb != null
                 && !track.Thumb.IsMouseOver)
             {
                 // Move Thumb to the Mouse location

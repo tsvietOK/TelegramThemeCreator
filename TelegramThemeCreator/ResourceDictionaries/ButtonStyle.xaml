@@ -1,6 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TelegramThemeCreator.ResourceDictionary">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:TelegramThemeCreator.ResourceDictionary">
     <Style
         x:Key="FocusVisual">
         <Setter
@@ -139,8 +140,8 @@
                                 Stroke="#FF707070"
                                 StrokeEndLineCap="Round"
                                 StrokeStartLineCap="Round"
-                                StrokeThickness="2" 
-                                Margin="4"/>
+                                StrokeThickness="2"
+                                Margin="4" />
                             <ContentPresenter
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
@@ -172,5 +173,4 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

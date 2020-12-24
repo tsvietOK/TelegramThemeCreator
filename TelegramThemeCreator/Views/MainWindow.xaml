@@ -58,7 +58,6 @@
                     VerticalAlignment="Center"
                     Text="Telegarm Theme Creator"
                     Foreground="#FFE8E8E8" />
-
             </DockPanel>
         </Grid>
 
