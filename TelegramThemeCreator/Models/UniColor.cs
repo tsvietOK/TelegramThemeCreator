@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Media;
 using TelegramThemeCreator.Enums;
 
-namespace TelegramThemeCreator
+namespace TelegramThemeCreator.Models
 {
     /// <summary>
     /// Represents a color with support of HSL and HSV color modifications.

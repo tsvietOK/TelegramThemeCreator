@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Compression;
+using TelegramThemeCreator.Controllers;
+using TelegramThemeCreator.Extensions;
 using TelegramThemeCreator.Utils;
 
 namespace TelegramThemeCreator
@@ -17,15 +19,15 @@ namespace TelegramThemeCreator
         private const string SourceThemeFileName = "colors.tdesktop-palette";
         private const string SourceThemeFilePath = ResourceFolderPath + SourceThemeFileName;
 
-        private const string DefaultBackgroundColorFileName = "tiled.jpg";
-        private const string NewBackgroundImageFileName = "background.jpg";
+        private const string ChatBackgroundColorFileName = "tiled.jpg";
+        private const string NewChatBackgroundImageFileName = "background.jpg";
 
         private const string TempFolderPath = @"Temp\";
         private const string NewThemeFileName = "colors.tdesktop-theme";
         private const string NewThemeFilePath = TempFolderPath + NewThemeFileName;
 
-        private const int DefaultBackgroundWidth = 100;
-        private const int DefaultBackgroundHeight = 100;
+        private const int ChatBackgroundWidth = 100;
+        private const int ChatBackgroundHeight = 100;
 
         private const string NewZipFileName = "Your_theme.tdesktop-theme";
 
@@ -42,7 +44,7 @@ namespace TelegramThemeCreator
             // Recreate temporary directory
             FileUtils.RecreateDirectory(TempFolderPath);
 
-            var theme = new ThemeColorsList(SourceThemeFilePath);
+            var theme = new ThemeController(SourceThemeFilePath);
 
             theme.ApplyHue(newHue);
 
@@ -50,12 +52,12 @@ namespace TelegramThemeCreator
 
             if (useWindowsWallpaper)
             {
-                File.Copy(SysUtils.GetWinWallpaperFilePath(), TempFolderPath + NewBackgroundImageFileName);
+                File.Copy(SysUtils.GetWinWallpaperFilePath(), TempFolderPath + NewChatBackgroundImageFileName);
             }
             else
             {
-                BitmapUtils.GenerateImage(DefaultBackgroundWidth, DefaultBackgroundHeight, Color.FromArgb(255, 12, 12, 12))
-                    .SaveImage(TempFolderPath, DefaultBackgroundColorFileName, ImageFormat.Jpeg);
+                BitmapUtils.GenerateImage(ChatBackgroundWidth, ChatBackgroundHeight, Color.FromArgb(255, 12, 12, 12))
+                    .SaveImage(TempFolderPath, ChatBackgroundColorFileName, ImageFormat.Jpeg);
             }
 
             ZipFile.CreateFromDirectory(TempFolderPath, NewZipFileName);

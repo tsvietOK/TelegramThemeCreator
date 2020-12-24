@@ -1,4 +1,6 @@
-﻿namespace TelegramThemeCreator.Utils
+﻿using System;
+
+namespace TelegramThemeCreator.Utils
 {
     /// <summary>
     /// Provides static methods for color detection.
@@ -22,7 +24,8 @@
         /// <returns>True if provided string is standard color; otherwise, false.</returns>
         public static bool IsStandardColor(string hexColor)
         {
-            return hexColor.StartsWith("#ffffff") || hexColor.StartsWith("#000000");
+            return hexColor.StartsWith("#ffffff", StringComparison.OrdinalIgnoreCase)
+                || hexColor.StartsWith("#000000", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

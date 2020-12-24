@@ -1,7 +1,7 @@
 ﻿using TelegramThemeCreator.Enums;
 using TelegramThemeCreator.Utils;
 
-namespace TelegramThemeCreator
+namespace TelegramThemeCreator.Models
 {
     /// <summary>
     /// Represents a theme color.
@@ -55,12 +55,12 @@ namespace TelegramThemeCreator
         public UniColor Value { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether the current ThemeColor value is a color.
+        /// Determines whether the current <see cref="ThemeColor" /> value is a color.
         /// </summary>
         public bool IsColor { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether the current ThemeColor value is a standard color.
+        /// Determines whether the current <see cref="ThemeColor" /> value is a standard color.
         /// </summary>
         public bool IsStandardColor { get; private set; }
 
