@@ -63,9 +63,9 @@ filterInputInactiveBg: #3d444b; // default rounded input field background (like 
 checkboxFg: #6c6c6c; // default unchecked checkbox rounded rectangle (and also emoji category icons)
 sliderBgInactive: #545454; // default slider not active bar (like in Settings when you choose interface scale or custom notifications count)
 sliderBgActive: windowBgActive; // default slider active bar (like in Settings when you choose interface scale or custom notifications count)
-tooltipBg: #d4dadd; // tooltip background (like when you put mouse over the message timestamp and wait)
+tooltipBg: #282e33; // tooltip background (like when you put mouse over the message timestamp and wait)
 tooltipFg: #9a9e9c; // tooltip text
-tooltipBorderFg: #c9d1db; // tooltip border
+tooltipBorderFg: #313b43; // tooltip border
 titleShadow: #00000003; // one pixel line shadow at the bottom of custom window title
 titleBg: #3a4047; // custom window title background when window is inactive
 titleBgActive: titleBg; // custom window title background when window is active
@@ -200,8 +200,8 @@ historyFileNameOutFg: historyTextOutFg; // outbox media filename text
 historyFileNameOutFgSelected: #ffffff; // outbox media filename text in a selected message
 historyOutIconFg: #40e6c5; // outbox message tick / double tick icon
 historyOutIconFgSelected: #ffffff; // outbox message tick / double tick icon in a selected message
-historyIconFgInverted: #40e6c5; // media message tick / double tick icon (like in sent photo)
-historySendingOutIconFg: #9eface; // outbox sending message icon (clock)
+historyIconFgInverted: windowFgActive; // media message tick / double tick icon (like in sent photo)
+historySendingOutIconFg: #9dfadd; // outbox sending message icon (clock)
 historySendingInIconFg: #76838b; // inbox sending message icon (clock) (like in sent messages to yourself or in sent messages to a channel)
 historySendingInvertedIconFg: #ffffffc8; // media sending message icon (clock) (like in sent photo)
 historyCallArrowInFg: #26c2ab; // received phone call arrow
@@ -217,33 +217,42 @@ historyForwardChooseBg: #0000004c; // forwarding messages in a large window size
 historyForwardChooseFg: windowFgActive; // forwarding messages in a large window size "choose recipient" text
 historyPeer1NameFg: #ec7577; // red group member name
 historyPeer1NameFgSelected: #ffffff; // red group member name in a selected message
-historyPeer1UserpicBg: #e17076; // red userpic background
+historyPeer1UserpicBg: #ff845e; // red userpic background
 historyPeer2NameFg: #86d67f; // green group member name
 historyPeer2NameFgSelected: #ffffff; // green group member name in a selected message
-historyPeer2UserpicBg: #7bc862; // green userpic background
+historyPeer2UserpicBg: #9ad164; // green userpic background
 historyPeer3NameFg: #e4c054; // yellow group member name
 historyPeer3NameFgSelected: #ffffff; // yellow group member name in a selected message
-historyPeer3UserpicBg: #ccad4f; // yellow userpic background
+historyPeer3UserpicBg: #e5ca77; // yellow userpic background (actually unused)
 historyPeer4NameFg: #68c7f3; // blue group member name
 historyPeer4NameFgSelected: #ffffff; // blue group member name in a selected message
-historyPeer4UserpicBg: #65aadd; // blue userpic background
+historyPeer4UserpicBg: #5caffa; // blue userpic background
 historyPeer5NameFg: #b383f3; // purple group member name
 historyPeer5NameFgSelected: #ffffff; // purple group member name in a selected message
-historyPeer5UserpicBg: #a695e7; // purple userpic background
+historyPeer5UserpicBg: #b694f9; // purple userpic background
 historyPeer6NameFg: #e16794; // pink group member name
 historyPeer6NameFgSelected: #ffffff; // pink group member name in a selected message
-historyPeer6UserpicBg: #ee7aae; // pink userpic background
+historyPeer6UserpicBg: #ff8aac; // pink userpic background
 historyPeer7NameFg: #57c9e0; // sea group member name
 historyPeer7NameFgSelected: #ffffff; // sea group member name in a selected message
-historyPeer7UserpicBg: #6ec9cb; // sea userpic background
+historyPeer7UserpicBg: #5bcbe3; // sea userpic background
 historyPeer8NameFg: #efb05d; // orange group member name
 historyPeer8NameFgSelected: #ffffff; // orange group member name in a selected message
-historyPeer8UserpicBg: #eda86c; // orange userpic background
+historyPeer8UserpicBg: #febb5b; // orange userpic background
 historyPeerUserpicFg: windowFgActive; // default userpic initials
 historyScrollBarBg: #8989897a; // scroll bar current rectangle, the bar itself in the chat view (adjusted)
 historyScrollBarBgOver: #6b6b6bbc; // scroll bar current rectangle with mouse over it in the chat view (adjusted)
 historyScrollBg: #5f5f5f4c; // scroll bar background (adjusted)
 historyScrollBgOver: #6262626b; // scroll bar background with mouse over the scroll bar (adjusted)
+historyPeer1UserpicBg2: #d45246; // the second red userpic background
+historyPeer2UserpicBg2: #46ba43; // the second green userpic background
+historyPeer3UserpicBg2: #e5ca77; // the second yellow userpic background (actually unused)
+historyPeer4UserpicBg2: #408acf; // the second blue userpic background
+historyPeer5UserpicBg2: #6c61df; // the second purple userpic background
+historyPeer6UserpicBg2: #d95574; // the second pink userpic background
+historyPeer7UserpicBg2: #359ad4; // the second sea userpic background
+historyPeer8UserpicBg2: #f68136; // the second orange userpic background
+historyPeerSavedMessagesBg2: historyPeer4UserpicBg2; // the second saved messages userpic background
 msgInBg: #33393f; // inbox message background
 msgInBgSelected: #009687; // inbox selected message background (and background of selected text in those messages)
 msgOutBg: #2a2f33; // outbox message background
@@ -436,9 +445,9 @@ callBarMuteRipple: dialogsRippleBgActive; // active phone call bar mute and hang
 callBarBgMuted: #8f8f8f; // phone call bar with muted mic background
 callBarUnmuteRipple: #7f7f7f; // phone call bar with muted mic mute and hangup button ripple effect
 callBarFg: dialogsNameFgActive; // phone call bar text and icons
-importantTooltipBg: toastBg; // 
-importantTooltipFg: toastFg; // 
-importantTooltipFgLink: #65fce8; // 
+importantTooltipBg: toastBg; //
+importantTooltipFg: toastFg; //
+importantTooltipFgLink: #65fce8; //
 filterInputActiveBg: #3d444b; // default rounded input field active background (like in chats list search field when field is focused)
 botKbBg: #3d444b; // bot keyboard button background
 botKbDownBg: #494f55; // bot keyboard button ripple effect
@@ -454,3 +463,5 @@ sideBarIconFg: #8d939e; // filters side bar icon
 sideBarIconFgActive: #25dbc9; // filters side bar active item icon
 sideBarBadgeBg: #25dbc9; // filters side bar badge background
 sideBarBadgeBgMuted: #8d939e; // filters side bar unimportant badge background
+statisticsChartInactive: #313a43d8; // inactive area in footer of statistic charts
+statisticsChartActive: #596879d8; // sides in footer of statistic charts
