@@ -60,11 +60,10 @@ namespace TelegramThemeCreator.Controllers
         {
             string[] lines = File.ReadAllLines(path);
 
-            Regex split = new Regex(@"^(.+)\:(.+)");
+            Regex split = new Regex(@"^([aA-zZ0-9]+)\:\s((\#)?[aA-zZ0-9]+)\;");
 
             for (int i = 0; i < lines.Length; i++)
             {
-                lines[i] = Regex.Replace(lines[i], @"^\/\/\s.+|^\/\/|\/\/.+|\;|\s", string.Empty); // remove comments
                 Match match = split.Match(lines[i]);
                 if (match.Success)
                 {
